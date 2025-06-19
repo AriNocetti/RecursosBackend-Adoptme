@@ -43,6 +43,16 @@ app.use('/api/adoptions',adoptionsRouter);
 app.use('/api/sessions',sessionsRouter);
 app.use("/api/mocks", mocksRouter);
 
+app.get("/loggerTest", (req, res) => {
+    req.logger.debug("Debug log test");
+    req.logger.http("HTTP log test");
+    req.logger.info("Info log test");
+    req.logger.warning("Warning log test");
+    req.logger.error("Error log test");
+    req.logger.fatal("Fatal log test");
+    res.send("Logger test completed. Check your console and errors.log file.");
+});
+
 app.get("/error-no-controlado", (req, res) => {
     // throw new Error("Este es un error de nannannanana no controlado");
 

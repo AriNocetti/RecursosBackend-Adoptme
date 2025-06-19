@@ -1,0 +1,19 @@
+{"level":"debug","message":"Debug log test","timestamp":"2025-06-18T22:48:26.289Z"}
+{"level":"http","message":"HTTP log test","timestamp":"2025-06-18T22:48:26.289Z"}
+{"level":"info","message":"Info log test","timestamp":"2025-06-18T22:48:26.290Z"}
+{"level":"warning","message":"Warning log test","timestamp":"2025-06-18T22:48:26.290Z"}
+{"level":"error","message":"Error log test","timestamp":"2025-06-18T22:48:26.290Z"}
+{"level":"debug","message":"Logger initialized in DEV mode on port: 8080","timestamp":"2025-06-18T22:53:32.416Z"}
+{"level":"info","message":"✅ Conectado a MongoDB","timestamp":"2025-06-18T22:53:33.226Z"}
+{"level":"info","message":"Logger initialized in PROD mode on port: 8080","timestamp":"2025-06-18T22:54:11.932Z"}
+{"level":"info","message":"✅ Conectado a MongoDB","timestamp":"2025-06-18T22:54:12.573Z"}
+{"level":"debug","message":"Debug log test","timestamp":"2025-06-18T22:54:16.092Z"}
+{"level":"http","message":"HTTP log test","timestamp":"2025-06-18T22:54:16.093Z"}
+{"level":"info","message":"Info log test","timestamp":"2025-06-18T22:54:16.093Z"}
+{"level":"warning","message":"Warning log test","timestamp":"2025-06-18T22:54:16.094Z"}
+{"level":"error","message":"Error log test","timestamp":"2025-06-18T22:54:16.094Z"}
+{"level":"info","message":"✅ Conectado a MongoDB","timestamp":"2025-06-19T00:17:47.797Z"}
+{"level":"error","message":"Error log test","timestamp":"2025-06-19T00:22:00.727Z"}
+{"level":"fatal","message":"Fatal log test","timestamp":"2025-06-19T00:22:00.738Z"}
+{"level":"error","message":"Error log test","timestamp":"2025-06-19T00:22:44.802Z"}
+{"level":"fatal","message":"Fatal log test","timestamp":"2025-06-19T00:22:44.803Z"}
