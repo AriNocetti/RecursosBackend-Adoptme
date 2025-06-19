@@ -112,7 +112,7 @@ const generateData = async (req, res) => {
 };
 
 export default {
-    index,
+    // index,
     mockingPets,
     mockingUsers,
     generateData,
