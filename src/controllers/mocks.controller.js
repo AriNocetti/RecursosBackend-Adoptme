@@ -3,16 +3,16 @@ import PetDTO from "../dto/Pet.dto.js";
 import { petsService, usersService } from "../services/index.js";
 import { createHash } from "../utils/index.js";
 
-const index = async (req, res) => {
-    try {
-        res.send({
-            status: "success",
-            payload: {
-                mocks: true,
-            },
-        });
-    } catch (error) { }
-};
+// const index = async (req, res) => {
+//     try {
+//         res.send({
+//             status: "success",
+//             payload: {
+//                 mocks: true,
+//             },
+//         });
+//     } catch (error) { }
+// };
 
 const mockingPets = async (req, res) => {
     try {
