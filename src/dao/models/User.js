@@ -16,6 +16,12 @@ const schema = new mongoose.Schema({
         required:true,
         unique:true
     },
+    documents: [
+        {
+            name: { type: String, required:true},
+            reference: { type: String, required:true}
+        }
+    ],
     password:{
         type:String,
         required:true
@@ -34,6 +40,10 @@ const schema = new mongoose.Schema({
             }
         ],
         default:[]
+    },
+    last_connection:{
+        type:Date,
+        default:Date.now
     }
 })
 

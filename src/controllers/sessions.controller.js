@@ -33,6 +33,8 @@ const login = async (req, res) => {
     if(!isValidPassword) return res.status(400).send({status:"error",error:"Incorrect password"});
     const userDto = UserDTO.getUserTokenFrom(user);
     const token = jwt.sign(userDto,'tokenSecretJWT',{expiresIn:"1h"});
+    user.last_connection = Date.now();
+    await usersService.update(user._id,{last_connection:user.last_connection})
     res.cookie('coderCookie',token,{maxAge:3600000}).send({status:"success",message:"Logged in"})
 }
 
@@ -59,11 +61,26 @@ const unprotectedCurrent = async(req,res)=>{
     if(user)
         return res.send({status:"success",payload:user})
 }
+
+// Logout: borra la cookie y actualiza last_connection
+const logout = async (req, res) => {
+    try {
+        const cookie = req.cookies['coderCookie'];
+        if (!cookie) return res.status(400).send({ status: "error", error: "No session" });
+        const userData = jwt.verify(cookie, 'tokenSecretJWT');
+        // Actualiza last_connection
+        await usersService.update(userData._id, { last_connection: Date.now() });
+        res.clearCookie('coderCookie').send({ status: "success", message: "Logged out" });
+    } catch (error) {
+        res.status(500).send({ status: "error", error: error.message });
+    }
+}
+
 export default {
     current,
     login,
     register,
-    current,
+    logout,
     unprotectedLogin,
     unprotectedCurrent
 }
