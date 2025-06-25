@@ -14,8 +14,12 @@ import { config } from './config/config.js';
 import { errorHandler, CustomError } from './utils/CustomError.js';
 import { errorsDictionary } from './dictionary/errors.dictionary.js';
 
+import swaggerUi from "swagger-ui-express";
+import { swaggerDocs } from './config/swagger.js';
+
+
 const app = express();
-const PORT = config.PORT||8080;
+const PORT = config.PORT || 8080;
 console.log(config.MONGO_DB_URL, 'url')
 mongoose.connection.on('connected', () => {
     console.log('✅ Conectado a MongoDB');
@@ -23,7 +27,7 @@ mongoose.connection.on('connected', () => {
 });
 
 mongoose.connection.on('error', (err) => {
-    if (logger && logger.grave){
+    if (logger && logger.grave) {
         logger.grave('❌ Error al conectar a MongoDB:', err)
     }
     else {
@@ -33,14 +37,15 @@ mongoose.connection.on('error', (err) => {
 
 mongoose.connect(config.MONGO_DB_URL);
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(express.json());
 app.use(cookieParser());
 app.use(middLogg);
 
-app.use('/api/users',usersRouter);
-app.use('/api/pets',petsRouter);
-app.use('/api/adoptions',adoptionsRouter);
-app.use('/api/sessions',sessionsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/pets', petsRouter);
+app.use('/api/adoptions', adoptionsRouter);
+app.use('/api/sessions', sessionsRouter);
 app.use("/api/mocks", mocksRouter);
 
 app.get("/loggerTest", (req, res) => {
@@ -71,7 +76,7 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 process.on('uncaughtException', (error) => {
-    logger.grave('uncaughtException', error);
+    logger.fatal('uncaughtException', error);
     //pendiente ver si voy a salir del proceso
     //process.exit(1);
 
@@ -81,5 +86,5 @@ process.on('uncaughtException', (error) => {
     //   process.exit(1);
 });
 
-app.listen(PORT,()=>console.log(`Listening on ${PORT}`))
+app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 
