@@ -17,7 +17,7 @@ export class CustomError extends Error {
     }
 
     logError(){
-        logger.grave(this.message, this.dictionaryError.code, this.dictionaryError.httpStatus, this.dictionaryError.isOperational, this.details);
+        logger.fatal(this.message, this.dictionaryError.code, this.dictionaryError.httpStatus, this.dictionaryError.isOperational, this.details);
     }
 
     sendResponse(res){

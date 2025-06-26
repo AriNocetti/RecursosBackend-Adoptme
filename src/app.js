@@ -27,8 +27,8 @@ mongoose.connection.on('connected', () => {
 });
 
 mongoose.connection.on('error', (err) => {
-    if (logger && logger.grave) {
-        logger.grave('❌ Error al conectar a MongoDB:', err)
+    if (logger && logger.fatal) {
+        logger.fatal('❌ Error al conectar a MongoDB:', err)
     }
     else {
         console.error('❌ Error al conectar a MongoDB:', err);
@@ -68,7 +68,7 @@ app.get("/error-no-controlado", (req, res) => {
 app.use(errorHandler);
 
 process.on('unhandledRejection', (reason, p) => {
-    logger.grave('unhandledRejection', reason, p);
+    logger.fatal('unhandledRejection', reason, p);
     // I just caught an unhandled promise rejection,
     // since we already have fallback handler for unhandled errors (see below),
     // let throw and let him handle that

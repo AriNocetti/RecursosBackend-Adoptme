@@ -108,7 +108,7 @@ app.get("/error-custom-pro", (req, res, next) => {
 
 export const handler = new ErrorHandler();
 function errorHandle(error, req, res, next) {
-    req.logger.grave("Error capturado por el middleware:");
+    req.logger.fatal("Error capturado por el middleware:");
     let statusCode = 500;
     if (error.code && typeof error.code === "number") {
         if (error.code === ListErrors.INVALID_PARAM_ERROR) statusCode = 402;
