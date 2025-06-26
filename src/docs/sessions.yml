@@ -240,7 +240,7 @@ components:
       bearerFormat: JWT
 
 paths:
-  /sessions/register:
+  /api/sessions/register:
     post:
       tags:
         - Sessions
@@ -272,7 +272,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
   
-  /sessions/login:
+  /api/sessions/login:
     post:
       tags:
         - Sessions
@@ -323,7 +323,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
   
-  /sessions/current:
+  /api/sessions/current:
     get:
       tags:
         - Sessions
@@ -351,7 +351,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
   
-  /sessions/unprotectedLogin:
+  /api/sessions/unprotectedLogin:
     get:
       tags:
         - Sessions
@@ -393,7 +393,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
   
-  /sessions/unprotectedCurrent:
+  /api/sessions/unprotectedCurrent:
     get:
       tags:
         - Sessions
@@ -421,8 +421,8 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
   
-  /sessions/logout:
-    get:
+  /api/sessions/logout:
+    post:
       tags:
         - Sessions
       summary: User logout
