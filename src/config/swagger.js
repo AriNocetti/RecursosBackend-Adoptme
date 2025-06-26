@@ -20,7 +20,7 @@ const swaggerOptions = {
             },
         ],
     },
-    apis: ["./src/docs/**/*.yaml", "./src/routes/**/*.js"], // Configuración para modo mixto (YAML y JSDoc)
+    apis: ["./src/docs/**/*.yaml", "./src/controllers/**/*.js","./src/docs/sessions.yml" ], // Configuración para modo mixto (YAML y JSDoc)
     
     // Configuración alternativa para JSDoc en línea
     // apis: ['./src/**/*.js'], // o apis: ['./src/*.js'],  apis: ['./src/routes/**/*.js']
