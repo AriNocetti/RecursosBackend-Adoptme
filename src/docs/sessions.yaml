@@ -1,23 +1,5 @@
-openapi: 3.0.3
-info:
-  title: Adoptme Sessions API
-  description: API for user authentication and session management in the Adoptme application
-  version: 1.0.0
-  contact:
-    name: Adoptme Team
-    email: support@adoptme.com
-
-servers:
-  - url: https://api.adoptme.com/api
-    description: Production server
-  - url: https://staging-api.adoptme.com/api
-    description: Staging server
-  - url: http://localhost:8080/api
-    description: Local development server
-
-tags:
-  - name: Sessions
-    description: User authentication and session management operations
+# Este archivo contiene solo los paths y componentes específicos de sesiones
+# La información general, servidores y tags están en openapi.yaml
 
 components:
   schemas:
@@ -191,12 +173,6 @@ components:
                 error: Incomplete values
             UserExists:
               value:
-                status: error
-                error: User already exists
-            IncorrectPassword:
-              value:
-                status: error
-                error: Incorrect password
     
     NotFound:
       description: The specified resource was not found
@@ -209,36 +185,11 @@ components:
             error: User doesn't exist
     
     Unauthorized:
-      description: Authentication is required or has failed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: error
-            error: Unauthorized access
+      $ref: '../components.yaml#/components/responses/Unauthorized'
     
     ServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: error
-            error: Internal server error
+      $ref: '../components.yaml#/components/responses/ServerError'
   
-  securitySchemes:
-    cookieAuth:
-      type: apiKey
-      in: cookie
-      name: coderCookie
-    
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-
 paths:
   /api/sessions/register:
     post:
@@ -268,9 +219,9 @@ paths:
               operationId: loginUser
               description: After registering, the user can login with their credentials
         '400':
-          $ref: '#/components/responses/BadRequest'
+          $ref: '../components.yaml#/components/responses/BadRequest'
         '500':
-          $ref: '#/components/responses/ServerError'
+          $ref: '../components.yaml#/components/responses/ServerError'
   
   /api/sessions/login:
     post:
@@ -317,18 +268,21 @@ paths:
               operationId: getCurrentUser
               description: After login, the user can access their profile information
         '400':
-          $ref: '#/components/responses/BadRequest'
+          $ref: '../components.yaml#/components/responses/BadRequest'
         '404':
-          $ref: '#/components/responses/NotFound'
+          $ref: '../components.yaml#/components/responses/NotFound'
         '500':
-          $ref: '#/components/responses/ServerError'
+          $ref: '../components.yaml#/components/responses/ServerError'
   
   /api/sessions/current:
     get:
       tags:
         - Sessions
       summary: Get current user
-      description: Returns the information of the currently logged-in user
+      description: |
+        Returns the information of the currently logged-in user.
+        **IMPORTANTE**: Debes iniciar sesión primero usando el endpoint /api/sessions/login.
+        La cookie de autenticación debe estar presente para que este endpoint funcione correctamente.
       operationId: getCurrentUser
       security:
         - cookieAuth: []
@@ -347,9 +301,9 @@ paths:
                   email: john.doe@example.com
                   role: user
         '401':
-          $ref: '#/components/responses/Unauthorized'
+          $ref: '../components.yaml#/components/responses/Unauthorized'
         '500':
-          $ref: '#/components/responses/ServerError'
+          $ref: '../components.yaml#/components/responses/ServerError'
   
   /api/sessions/unprotectedLogin:
     get:
@@ -387,21 +341,24 @@ paths:
                 type: string
                 example: unprotectedCookie=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; Path=/; HttpOnly; Max-Age=3600
         '400':
-          $ref: '#/components/responses/BadRequest'
+          $ref: '../components.yaml#/components/responses/BadRequest'
         '404':
-          $ref: '#/components/responses/NotFound'
+          $ref: '../components.yaml#/components/responses/NotFound'
         '500':
-          $ref: '#/components/responses/ServerError'
+          $ref: '../components.yaml#/components/responses/ServerError'
   
   /api/sessions/unprotectedCurrent:
     get:
       tags:
         - Sessions
       summary: Get current user (unprotected)
-      description: Returns the information of the currently logged-in user using the unprotected cookie
+      description: |
+        Returns the information of the currently logged-in user using the unprotected cookie.
+        **IMPORTANTE**: Debes iniciar sesión primero usando el endpoint /api/sessions/unprotectedLogin.
+        La cookie de autenticación debe estar presente para que este endpoint funcione correctamente.
       operationId: getUnprotectedCurrentUser
       security:
-        - cookieAuth: []
+        - unprotectedCookieAuth: []
       responses:
         '200':
           description: Current user information
@@ -417,9 +374,9 @@ paths:
                   email: john.doe@example.com
                   role: user
         '401':
-          $ref: '#/components/responses/Unauthorized'
+          $ref: '../components.yaml#/components/responses/Unauthorized'
         '500':
-          $ref: '#/components/responses/ServerError'
+          $ref: '../components.yaml#/components/responses/ServerError'
   
   /api/sessions/logout:
     post:
@@ -450,4 +407,4 @@ paths:
                 status: error
                 error: No session
         '500':
-          $ref: '#/components/responses/ServerError'
+          $ref: '../components.yaml#/components/responses/ServerError'

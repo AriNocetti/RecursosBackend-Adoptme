@@ -15,6 +15,7 @@ import { createHash } from "../utils/index.js";
 // };
 
 const mockingPets = async (req, res) => {
+    console.log('llego a pets')
     try {
         const num = 100;
         const pets = [];

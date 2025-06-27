@@ -65,6 +65,15 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/User"
+          links:
+            getUserById:
+              operationId: getUserById
+              description: >-
+                El ID de usuario obtenido en la respuesta puede usarse para obtener
+                detalles específicos de un usuario
+              parameters:
+                uid: '$response.body#/payload/0/_id'
+              
         "500":
           description: Error interno del servidor
 
@@ -80,6 +89,7 @@ paths:
           description: ID del usuario
           schema:
             type: string
+      operationId: getUserById
       responses:
         "200":
           description: Usuario encontrado
@@ -93,6 +103,19 @@ paths:
                     example: success
                   payload:
                     $ref: "#/components/schemas/User"
+          links:
+            updateUser:
+              operationId: updateUser
+              description: >-
+                El ID de usuario obtenido puede usarse para actualizar los datos del usuario
+              parameters:
+                uid: '$response.body#/payload/_id'
+            deleteUser:
+              operationId: deleteUser
+              description: >-
+                El ID de usuario obtenido puede usarse para eliminar el usuario
+              parameters:
+                uid: '$response.body#/payload/_id'
         "404":
           description: Usuario no encontrado
           content:
@@ -109,6 +132,7 @@ paths:
     
     put:
       summary: Actualiza un usuario por ID
+      operationId: updateUser
       tags:
         - Users
       parameters:
@@ -161,6 +185,7 @@ paths:
     
     delete:
       summary: Elimina un usuario por ID
+      operationId: deleteUser
       tags:
         - Users
       parameters:
@@ -226,9 +251,3 @@ paths:
                   message:
                     type: string
                     example: Documents uploaded successfully
-        "400":
-          description: No se subieron archivos
-        "404":
-          description: Usuario no encontrado
-        "500":
-          description: Error interno del servidor

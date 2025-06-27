@@ -1,0 +1,282 @@
+paths:
+  /api/adoptions:
+    get:
+      tags:
+        - Adoptions
+      summary: Obtener todas las adopciones
+      description: Retorna un listado de todas las adopciones registradas en el sistema
+      operationId: getAllAdoptions
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Lista de adopciones obtenida correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '../components.yaml#/components/schemas/AdoptionsListResponse'
+              example:
+                status: "success"
+                payload: [
+                  {
+                    _id: "60d21b4667d0d8992e610c85",
+                    owner: "60d21b4667d0d8992e610c80",
+                    pet: "60d21b4667d0d8992e610c82",
+                    createdAt: "2023-06-22T15:24:25.000Z"
+                  },
+                  {
+                    _id: "60d21b4667d0d8992e610c86",
+                    owner: "60d21b4667d0d8992e610c81",
+                    pet: "60d21b4667d0d8992e610c83",
+                    createdAt: "2023-06-23T10:15:30.000Z"
+                  }
+                ]
+        '401':
+          $ref: '../components.yaml#/components/responses/Unauthorized'
+        '500':
+          $ref: '../components.yaml#/components/responses/ServerError'
+
+  /api/adoptions/{aid}:
+    get:
+      tags:
+        - Adoptions
+      summary: Obtener una adopción específica
+      description: Retorna la información detallada de una adopción según su ID
+      operationId: getAdoption
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: aid
+          in: path
+          description: ID de la adopción a consultar
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+          example: "60d21b4667d0d8992e610c85"
+      responses:
+        '200':
+          description: Adopción encontrada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '../components.yaml#/components/schemas/AdoptionResponse'
+              example:
+                status: "success"
+                payload:
+                  _id: "60d21b4667d0d8992e610c85"
+                  owner: "60d21b4667d0d8992e610c80"
+                  pet: "60d21b4667d0d8992e610c82"
+                  createdAt: "2023-06-22T15:24:25.000Z"
+        '401':
+          $ref: '../components.yaml#/components/responses/Unauthorized'
+        '404':
+          description: Adopción no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '../components.yaml#/components/schemas/ErrorResponse'
+              example:
+                status: "error"
+                error: "Adoption not found"
+        '500':
+          $ref: '../components.yaml#/components/responses/ServerError'
+
+  /api/adoptions/{uid}/{pid}:
+    post:
+      tags:
+        - Adoptions
+      summary: Crear una nueva adopción
+      description: |
+        Registra una nueva adopción asociando un usuario con una mascota.
+        Actualiza el estado de la mascota a 'adoptada' y la vincula al usuario.
+      operationId: createAdoption
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: uid
+          in: path
+          description: ID del usuario que adopta
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+          example: "60d21b4667d0d8992e610c80"
+        - name: pid
+          in: path
+          description: ID de la mascota a adoptar
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+          example: "60d21b4667d0d8992e610c82"
+      responses:
+        '200':
+          description: Adopción creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '../components.yaml#/components/schemas/SuccessResponse'
+              example:
+                status: "success"
+                message: "Pet adopted"
+          links:
+            GetAdoption:
+              operationId: getAdoption
+              parameters:
+                aid: '$response.body.payload._id'
+              description: >-
+                El ID de la adopción creada puede usarse para consultar sus detalles
+        '400':
+          description: Error en la solicitud
+          content:
+            application/json:
+              schema:
+                $ref: '../components.yaml#/components/schemas/ErrorResponse'
+              examples:
+                petAlreadyAdopted:
+                  value:
+                    status: "error"
+                    error: "Pet is already adopted"
+        '401':
+          $ref: '../components.yaml#/components/responses/Unauthorized'
+        '404':
+          description: Usuario o mascota no encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '../components.yaml#/components/schemas/ErrorResponse'
+              examples:
+                userNotFound:
+                  value:
+                    status: "error"
+                    error: "User not found"
+                petNotFound:
+                  value:
+                    status: "error"
+                    error: "Pet not found"
+        '500':
+          $ref: '../components.yaml#/components/responses/ServerError'
+
+components:
+  schemas:
+    Adoption:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          description: Identificador único de la adopción
+          example: "60d21b4667d0d8992e610c85"
+        owner:
+          type: string
+          format: ObjectId
+          description: ID del usuario que adoptó la mascota
+          example: "60d21b4667d0d8992e610c80"
+        pet:
+          type: string
+          format: ObjectId
+          description: ID de la mascota adoptada
+          example: "60d21b4667d0d8992e610c82"
+        createdAt:
+          type: string
+          format: date-time
+          description: Fecha y hora de la adopción
+          example: "2023-06-22T15:24:25.000Z"
+      required:
+        - owner
+        - pet
+
+    AdoptionsListResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ["success"]
+          description: Estado de la respuesta
+          example: "success"
+        payload:
+          type: array
+          description: Lista de adopciones
+          items:
+            $ref: '../components.yaml#/components/schemas/Adoption'
+      required:
+        - status
+        - payload
+
+    AdoptionResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ["success"]
+          description: Estado de la respuesta
+          example: "success"
+        payload:
+          $ref: '../components.yaml#/components/schemas/Adoption'
+      required:
+        - status
+        - payload
+
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ["success"]
+          description: Estado de la respuesta
+          example: "success"
+        message:
+          type: string
+          description: Mensaje descriptivo del resultado
+          example: "Pet adopted"
+      required:
+        - status
+        - message
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ["error"]
+          description: Estado de la respuesta
+          example: "error"
+        error:
+          type: string
+          description: Descripción del error
+          example: "Pet not found"
+      required:
+        - status
+        - error
+
+  responses:
+    Unauthorized:
+      description: No autorizado. El usuario no está autenticado o no tiene permisos.
+      content:
+        application/json:
+          schema:
+            $ref: '../components.yaml#/components/schemas/ErrorResponse'
+          example:
+            status: "error"
+            error: "Unauthorized"
+
+    NotFound:
+      description: Recurso no encontrado
+      content:
+        application/json:
+          schema:
+            $ref: '../components.yaml#/components/schemas/ErrorResponse'
+          example:
+            status: "error"
+            error: "Resource not found"
+
+    ServerError:
+      description: Error interno del servidor
+      content:
+        application/json:
+          schema:
+            $ref: '../components.yaml#/components/schemas/ErrorResponse'
+          example:
+            status: "error"
+            error: "Internal server error"
