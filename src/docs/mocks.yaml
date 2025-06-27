@@ -315,21 +315,7 @@ components:
         - status
         - payload
 
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum: ["error"]
-          description: Estado de la respuesta
-          example: "error"
-        error:
-          type: string
-          description: Descripción del error
-          example: "Failed to generate data"
-      required:
-        - status
-        - error
+
 
   responses:
     Unauthorized:

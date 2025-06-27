@@ -14,27 +14,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '../components.yaml#/components/schemas/AdoptionsListResponse'
-              example:
-                status: "success"
-                payload: [
-                  {
-                    _id: "60d21b4667d0d8992e610c85",
-                    owner: "60d21b4667d0d8992e610c80",
-                    pet: "60d21b4667d0d8992e610c82",
-                    createdAt: "2023-06-22T15:24:25.000Z"
-                  },
-                  {
-                    _id: "60d21b4667d0d8992e610c86",
-                    owner: "60d21b4667d0d8992e610c81",
-                    pet: "60d21b4667d0d8992e610c83",
-                    createdAt: "2023-06-23T10:15:30.000Z"
-                  }
-                ]
-        '401':
-          $ref: '../components.yaml#/components/responses/Unauthorized'
-        '500':
-          $ref: '../components.yaml#/components/responses/ServerError'
+                $ref: '#/components/schemas/AdoptionsListResponse'
+              examples:
+                default:
+                  $ref: '#/components/schemas/AdoptionsListResponse'
 
   /api/adoptions/{aid}:
     get:
@@ -53,14 +36,14 @@ paths:
           schema:
             type: string
             format: ObjectId
-          example: "60d21b4667d0d8992e610c85"
+          example: "685dfce617e29ff086ccf94f"
       responses:
         '200':
           description: Adopción encontrada exitosamente
           content:
             application/json:
               schema:
-                $ref: '../components.yaml#/components/schemas/AdoptionResponse'
+                $ref: '#/components/schemas/AdoptionResponse'
               example:
                 status: "success"
                 payload:
@@ -68,19 +51,15 @@ paths:
                   owner: "60d21b4667d0d8992e610c80"
                   pet: "60d21b4667d0d8992e610c82"
                   createdAt: "2023-06-22T15:24:25.000Z"
-        '401':
-          $ref: '../components.yaml#/components/responses/Unauthorized'
         '404':
           description: Adopción no encontrada
           content:
             application/json:
               schema:
-                $ref: '../components.yaml#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
               example:
                 status: "error"
                 error: "Adoption not found"
-        '500':
-          $ref: '../components.yaml#/components/responses/ServerError'
 
   /api/adoptions/{uid}/{pid}:
     post:
@@ -116,7 +95,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '../components.yaml#/components/schemas/SuccessResponse'
+                $ref: '#/components/schemas/SuccessResponse'
               example:
                 status: "success"
                 message: "Pet adopted"
@@ -132,20 +111,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '../components.yaml#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
               examples:
                 petAlreadyAdopted:
                   value:
                     status: "error"
                     error: "Pet is already adopted"
-        '401':
-          $ref: '../components.yaml#/components/responses/Unauthorized'
         '404':
           description: Usuario o mascota no encontrados
           content:
             application/json:
               schema:
-                $ref: '../components.yaml#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ErrorResponse'
               examples:
                 userNotFound:
                   value:
@@ -155,8 +132,6 @@ paths:
                   value:
                     status: "error"
                     error: "Pet not found"
-        '500':
-          $ref: '../components.yaml#/components/responses/ServerError'
 
 components:
   schemas:
@@ -167,7 +142,7 @@ components:
           type: string
           format: ObjectId
           description: Identificador único de la adopción
-          example: "60d21b4667d0d8992e610c85"
+          example: "685dfce617e29ff086ccf94f"
         owner:
           type: string
           format: ObjectId
@@ -178,11 +153,10 @@ components:
           format: ObjectId
           description: ID de la mascota adoptada
           example: "60d21b4667d0d8992e610c82"
-        createdAt:
-          type: string
-          format: date-time
-          description: Fecha y hora de la adopción
-          example: "2023-06-22T15:24:25.000Z"
+        __v:
+          type: number
+          description: Version de la adopción
+          example: 0
       required:
         - owner
         - pet
@@ -199,7 +173,7 @@ components:
           type: array
           description: Lista de adopciones
           items:
-            $ref: '../components.yaml#/components/schemas/Adoption'
+            $ref: '#/components/schemas/Adoption'
       required:
         - status
         - payload
@@ -213,70 +187,7 @@ components:
           description: Estado de la respuesta
           example: "success"
         payload:
-          $ref: '../components.yaml#/components/schemas/Adoption'
+          $ref: '#/components/schemas/Adoption'
       required:
         - status
         - payload
-
-    SuccessResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum: ["success"]
-          description: Estado de la respuesta
-          example: "success"
-        message:
-          type: string
-          description: Mensaje descriptivo del resultado
-          example: "Pet adopted"
-      required:
-        - status
-        - message
-
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum: ["error"]
-          description: Estado de la respuesta
-          example: "error"
-        error:
-          type: string
-          description: Descripción del error
-          example: "Pet not found"
-      required:
-        - status
-        - error
-
-  responses:
-    Unauthorized:
-      description: No autorizado. El usuario no está autenticado o no tiene permisos.
-      content:
-        application/json:
-          schema:
-            $ref: '../components.yaml#/components/schemas/ErrorResponse'
-          example:
-            status: "error"
-            error: "Unauthorized"
-
-    NotFound:
-      description: Recurso no encontrado
-      content:
-        application/json:
-          schema:
-            $ref: '../components.yaml#/components/schemas/ErrorResponse'
-          example:
-            status: "error"
-            error: "Resource not found"
-
-    ServerError:
-      description: Error interno del servidor
-      content:
-        application/json:
-          schema:
-            $ref: '../components.yaml#/components/schemas/ErrorResponse'
-          example:
-            status: "error"
-            error: "Internal server error"
