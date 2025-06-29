@@ -93,17 +93,6 @@ paths:
                     documents: []
                   }
                 ]
-        '401':
-          $ref: '../components.yaml#/components/responses/Unauthorized'
-        '500':
-          description: Error al generar usuarios ficticios
-          content:
-            application/json:
-              schema:
-                $ref: '../components.yaml#/components/schemas/ErrorResponse'
-              example:
-                status: "error"
-                error: "Failed to generate users"
 
   /api/mocks/generateData:
     post:
