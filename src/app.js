@@ -11,8 +11,7 @@ import mocksRouter from "./routes/mocks.router.js";
 
 import { logger, middLogg } from "./config/logger.js";
 import { config } from './config/config.js';
-import { errorHandler, CustomError } from './utils/CustomError.js';
-import { errorsDictionary } from './dictionary/errors.dictionary.js';
+import { errorHandler } from './utils/CustomError.js';
 
 import swaggerUi from "swagger-ui-express";
 import { swaggerDocs } from './config/swagger.js';
@@ -22,7 +21,6 @@ const app = express();
 const PORT = config.PORT || 8080;
 console.log(config.MONGO_DB_URL, 'url')
 mongoose.connection.on('connected', () => {
-    console.log('✅ Conectado a MongoDB');
     if (logger && logger.info) logger.info('✅ Conectado a MongoDB');
 });
 
@@ -58,12 +56,10 @@ app.get("/loggerTest", (req, res) => {
     res.send("Logger test completed. Check your console and errors.log file.");
 });
 
-app.get("/error-no-controlado", (req, res) => {
-    // throw new Error("Este es un error de nannannanana no controlado");
-
-    const error = new CustomError(errorsDictionary.DEPENDENCY_NOT_FOUND, ['no se encontro la dependencia tal', 'tambien ocurrio esto']);
-    throw error;
-});
+// app.get("/error-no-controlado", (req, res) => {
+//     const error = new CustomError(errorsDictionary.DEPENDENCY_NOT_FOUND, ['no se encontro la dependencia tal', 'tambien ocurrio esto']);
+//     throw error;
+// });
 
 app.use(errorHandler);
 
@@ -86,5 +82,6 @@ process.on('uncaughtException', (error) => {
     //   process.exit(1);
 });
 
-app.listen(PORT, () => console.log(`Listening on ${PORT}`))
+// La inicialización del servidor se ha movido a server.js
 
+export default app;
