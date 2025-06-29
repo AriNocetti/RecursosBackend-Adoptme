@@ -21,7 +21,7 @@ const app = express();
 const PORT = config.PORT || 8080;
 console.log(config.MONGO_DB_URL, 'url')
 mongoose.connection.on('connected', () => {
-    if (logger && logger.info) logger.info('✅ Conectado a MongoDB');
+    if (logger && logger.info) logger.info('✅ Conectado a MongoDB.');
 });
 
 mongoose.connection.on('error', (err) => {

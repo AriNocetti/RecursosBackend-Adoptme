@@ -15,7 +15,6 @@ import { createHash } from "../utils/index.js";
 // };
 
 const mockingPets = async (req, res) => {
-    console.log('llego a pets')
     try {
         const num = 100;
         const pets = [];
@@ -41,24 +40,33 @@ const mockingPets = async (req, res) => {
 
 const mockingUsers = async (req, res) => {
     try {
-        const { num = 50 } = req.body;
+        const num = 50
         const users = [];
         const hashedPassword = await createHash("coder123");
 
         for (let i = 0; i < num; i++) {
+            // Generamos un ID de MongoDB simulado
+            const mockId = faker.database.mongodbObjectId();
+            
             const user = {
+                _id: mockId,
                 first_name: faker.person.firstName(),
                 last_name: faker.person.lastName(),
                 email: faker.internet.email(),
                 password: hashedPassword,
                 role: faker.helpers.arrayElement(["user", "admin"]),
                 pets: [],
+                __v: 0,
+                last_connection: faker.date.recent().toISOString(),
+                documents: []
             };
             users.push(user);
         }
 
-        const result = await usersService.create(users);
-        res.status(200).send({ status: "success", payload: users });
+        // No creamos realmente los usuarios en la base de datos para evitar conflictos
+        // const result = await usersService.create(users);
+        console.log('Ejecutando versión actualizada del mockingUsers');
+        res.status(200).send({ status: "success", message: "Versión actualizada", payload: users });
     } catch (error) {
         res
             .status(500)
@@ -74,13 +82,20 @@ const generateData = async (req, res) => {
         const hashedPassword = await createHash("coder123");
 
         for (let i = 0; i < users; i++) {
+            // Generamos un ID de MongoDB simulado
+            const mockId = faker.database.mongodbObjectId();
+            
             const user = {
+                _id: mockId,
                 first_name: faker.person.firstName(),
                 last_name: faker.person.lastName(),
                 email: faker.internet.email(),
                 password: hashedPassword,
                 role: faker.helpers.arrayElement(["user", "admin"]),
                 pets: [],
+                __v: 0,
+                last_connection: faker.date.recent().toISOString(),
+                documents: []
             };
             generatedUsers.push(user);
         }
@@ -113,7 +128,6 @@ const generateData = async (req, res) => {
 };
 
 export default {
-    // index,
     mockingPets,
     mockingUsers,
     generateData,

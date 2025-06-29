@@ -53,26 +53,11 @@ paths:
         - Mocks
       summary: Generar usuarios ficticios
       description: |
-        Crea usuarios ficticios con datos aleatorios para pruebas.
-        Por defecto genera 50 usuarios, pero se puede especificar otra cantidad.
+        Crea 50 usuarios ficticios con datos aleatorios para pruebas.
+        Los usuarios generados incluyen campos compatibles con MongoDB como _id, __v, last_connection y documents.
       operationId: mockingUsers
       security:
         - cookieAuth: []
-      requestBody:
-        description: Configuración para la generación de usuarios
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                num:
-                  type: integer
-                  description: Número de usuarios a generar
-                  default: 50
-                  example: 10
-            example:
-              num: 10
       responses:
         '200':
           description: Usuarios ficticios generados correctamente
@@ -84,20 +69,28 @@ paths:
                 status: "success"
                 payload: [
                   {
+                    _id: "6579f48e9b0c5d8a0c5e0b1a",
                     first_name: "John",
                     last_name: "Doe",
                     email: "john.doe@example.com",
                     password: "$2b$10$X7ZYdD6A2Y3X9pX9X7ZYdD6A2Y3X9pX9",
                     role: "user",
-                    pets: []
+                    pets: [],
+                    __v: 0,
+                    last_connection: "2023-12-15T10:30:00.000Z",
+                    documents: []
                   },
                   {
+                    _id: "6579f48e9b0c5d8a0c5e0b1b",
                     first_name: "Jane",
                     last_name: "Smith",
                     email: "jane.smith@example.com",
                     password: "$2b$10$X7ZYdD6A2Y3X9pX9X7ZYdD6A2Y3X9pX9",
                     role: "admin",
-                    pets: []
+                    pets: [],
+                    __v: 0,
+                    last_connection: "2023-12-14T15:45:00.000Z",
+                    documents: []
                   }
                 ]
         '401':
@@ -216,6 +209,11 @@ components:
     MockUser:
       type: object
       properties:
+        _id:
+          type: string
+          format: ObjectId
+          description: ID único de MongoDB
+          example: "6579f48e9b0c5d8a0c5e0b1a"
         first_name:
           type: string
           description: Nombre del usuario
@@ -244,6 +242,23 @@ components:
           items:
             type: string
             format: ObjectId
+          default: []
+          example: []
+        __v:
+          type: integer
+          description: Versión del documento en MongoDB
+          default: 0
+          example: 0
+        last_connection:
+          type: string
+          format: date-time
+          description: Fecha de la última conexión del usuario
+          example: "2023-12-15T10:30:00.000Z"
+        documents:
+          type: array
+          description: Documentos asociados al usuario
+          items:
+            type: object
           default: []
           example: []
       required:
