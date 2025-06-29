@@ -49,6 +49,7 @@ docker tag backend3-proyecto-final-adoptme TU_USUARIO/backend3-proyecto-final-ad
 # Subir la imagen a Docker Hub
 docker push TU_USUARIO/backend3-proyecto-final-adoptme:latest
 ```
+## Link a la imagen https://hub.docker.com/r/arinoc/backend3-proyecto-final-adoptme
 
 ## Descargar la imagen desde Docker Hub
 
