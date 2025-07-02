@@ -71,3 +71,13 @@ Una vez que la aplicación esté en ejecución, puedes acceder a:
 
 - API: http://localhost:8080
 - Documentación Swagger: http://localhost:8080/api-docs
+
+## Correr los tests
+
+Ejecutar los tests corriendo el comando:
+
+```bash
+npm run test
+```
+
+Esto ejecutará todos los tests disponibles en el proyecto.
