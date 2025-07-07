@@ -1,25 +1,27 @@
-import userModel from "./models/User.js";
-
+import userModel from './models/User.js';
 
 export default class Users {
-    
-    get = (params) =>{
-        return userModel.find(params);
-    }
+  constructor() {
+    this.model = userModel;
+  }
 
-    getBy = (params) =>{
-        return userModel.findOne(params);
-    }
+  get(params) {
+    return this.model.find(params);
+  }
 
-    save = (doc) =>{
-        return userModel.create(doc);
-    }
+  getBy(params) {
+    return this.model.findOne(params);
+  }
 
-    update = (id,doc) =>{
-        return userModel.findByIdAndUpdate(id,{$set:doc})
-    }
+  save(doc) {
+    return this.model.create(doc);
+  }
 
-    delete = (id) =>{
-        return userModel.findByIdAndDelete(id);
-    }
+  update(id, doc) {
+    return this.model.findByIdAndUpdate(id, { $set: doc });
+  }
+
+  delete(id) {
+    return this.model.findByIdAndDelete(id);
+  }
 }

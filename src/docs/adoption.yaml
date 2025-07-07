@@ -36,7 +36,7 @@ paths:
           schema:
             type: string
             format: ObjectId
-          example: "685dfce617e29ff086ccf94f"
+          example: '685dfce617e29ff086ccf94f'
       responses:
         '200':
           description: Adopción encontrada exitosamente
@@ -45,12 +45,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/AdoptionResponse'
               example:
-                status: "success"
+                status: 'success'
                 payload:
-                  _id: "60d21b4667d0d8992e610c85"
-                  owner: "60d21b4667d0d8992e610c80"
-                  pet: "60d21b4667d0d8992e610c82"
-                  createdAt: "2023-06-22T15:24:25.000Z"
+                  _id: '60d21b4667d0d8992e610c85'
+                  owner: '60d21b4667d0d8992e610c80'
+                  pet: '60d21b4667d0d8992e610c82'
+                  createdAt: '2023-06-22T15:24:25.000Z'
         '404':
           description: Adopción no encontrada
           content:
@@ -58,8 +58,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
-                status: "error"
-                error: "Adoption not found"
+                status: 'error'
+                error: 'Adoption not found'
 
   /api/adoptions/{uid}/{pid}:
     post:
@@ -80,7 +80,7 @@ paths:
           schema:
             type: string
             format: ObjectId
-          example: "60d21b4667d0d8992e610c80"
+          example: '60d21b4667d0d8992e610c80'
         - name: pid
           in: path
           description: ID de la mascota a adoptar
@@ -88,7 +88,7 @@ paths:
           schema:
             type: string
             format: ObjectId
-          example: "60d21b4667d0d8992e610c82"
+          example: '60d21b4667d0d8992e610c82'
       responses:
         '200':
           description: Adopción creada exitosamente
@@ -97,8 +97,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/SuccessResponse'
               example:
-                status: "success"
-                message: "Pet adopted"
+                status: 'success'
+                message: 'Pet adopted'
           links:
             GetAdoption:
               operationId: getAdoption
@@ -115,8 +115,8 @@ paths:
               examples:
                 petAlreadyAdopted:
                   value:
-                    status: "error"
-                    error: "Pet is already adopted"
+                    status: 'error'
+                    error: 'Pet is already adopted'
         '404':
           description: Usuario o mascota no encontrados
           content:
@@ -126,12 +126,12 @@ paths:
               examples:
                 userNotFound:
                   value:
-                    status: "error"
-                    error: "User not found"
+                    status: 'error'
+                    error: 'User not found'
                 petNotFound:
                   value:
-                    status: "error"
-                    error: "Pet not found"
+                    status: 'error'
+                    error: 'Pet not found'
 
 components:
   schemas:
@@ -142,17 +142,17 @@ components:
           type: string
           format: ObjectId
           description: Identificador único de la adopción
-          example: "685dfce617e29ff086ccf94f"
+          example: '685dfce617e29ff086ccf94f'
         owner:
           type: string
           format: ObjectId
           description: ID del usuario que adoptó la mascota
-          example: "60d21b4667d0d8992e610c80"
+          example: '60d21b4667d0d8992e610c80'
         pet:
           type: string
           format: ObjectId
           description: ID de la mascota adoptada
-          example: "60d21b4667d0d8992e610c82"
+          example: '60d21b4667d0d8992e610c82'
         __v:
           type: number
           description: Version de la adopción
@@ -166,9 +166,9 @@ components:
       properties:
         status:
           type: string
-          enum: ["success"]
+          enum: ['success']
           description: Estado de la respuesta
-          example: "success"
+          example: 'success'
         payload:
           type: array
           description: Lista de adopciones
@@ -183,9 +183,9 @@ components:
       properties:
         status:
           type: string
-          enum: ["success"]
+          enum: ['success']
           description: Estado de la respuesta
-          example: "success"
+          example: 'success'
         payload:
           $ref: '#/components/schemas/Adoption'
       required:

@@ -38,13 +38,13 @@ components:
       in: cookie
       name: coderCookie
       description: Cookie JWT para autenticación de usuarios
-    
+
     unprotectedCookieAuth:
       type: apiKey
       in: cookie
       name: unprotectedCookie
       description: Cookie JWT para autenticación no protegida
-      
+
   # Importar otros componentes
   schemas:
     $ref: './components.yaml#/components/schemas'

@@ -36,7 +36,7 @@ components:
         - last_name
         - email
         - password
-    
+
     UserRegisterRequest:
       type: object
       properties:
@@ -61,7 +61,7 @@ components:
         - last_name
         - email
         - password
-    
+
     UserLoginRequest:
       type: object
       properties:
@@ -76,7 +76,7 @@ components:
       required:
         - email
         - password
-    
+
     UserResponse:
       type: object
       properties:
@@ -101,7 +101,7 @@ components:
         - name
         - email
         - role
-    
+
     SuccessResponse:
       type: object
       properties:
@@ -115,7 +115,7 @@ components:
           example: Logged in
       required:
         - status
-    
+
     RegisterSuccessResponse:
       type: object
       properties:
@@ -130,7 +130,7 @@ components:
       required:
         - status
         - payload
-    
+
     CurrentUserResponse:
       type: object
       properties:
@@ -143,7 +143,7 @@ components:
       required:
         - status
         - payload
-    
+
     ErrorResponse:
       type: object
       properties:
@@ -158,7 +158,7 @@ components:
       required:
         - status
         - error
-  
+
   responses:
     BadRequest:
       description: Bad request due to invalid or missing parameters
@@ -173,7 +173,7 @@ components:
                 error: Incomplete values
             UserExists:
               value:
-    
+
     NotFound:
       description: The specified resource was not found
       content:
@@ -183,13 +183,13 @@ components:
           example:
             status: error
             error: User doesn't exist
-    
+
     Unauthorized:
       $ref: '../components.yaml#/components/responses/Unauthorized'
-    
+
     ServerError:
       $ref: '../components.yaml#/components/responses/ServerError'
-  
+
 paths:
   /api/sessions/register:
     post:
@@ -222,7 +222,7 @@ paths:
           $ref: '../components.yaml#/components/responses/BadRequest'
         '500':
           $ref: '../components.yaml#/components/responses/ServerError'
-  
+
   /api/sessions/login:
     post:
       tags:
@@ -273,7 +273,7 @@ paths:
           $ref: '../components.yaml#/components/responses/NotFound'
         '500':
           $ref: '../components.yaml#/components/responses/ServerError'
-  
+
   /api/sessions/current:
     get:
       tags:
@@ -304,7 +304,7 @@ paths:
           $ref: '../components.yaml#/components/responses/Unauthorized'
         '500':
           $ref: '../components.yaml#/components/responses/ServerError'
-  
+
   /api/sessions/unprotectedLogin:
     get:
       tags:
@@ -346,7 +346,7 @@ paths:
           $ref: '../components.yaml#/components/responses/NotFound'
         '500':
           $ref: '../components.yaml#/components/responses/ServerError'
-  
+
   /api/sessions/unprotectedCurrent:
     get:
       tags:
@@ -377,7 +377,7 @@ paths:
           $ref: '../components.yaml#/components/responses/Unauthorized'
         '500':
           $ref: '../components.yaml#/components/responses/ServerError'
-  
+
   /api/sessions/logout:
     post:
       tags:

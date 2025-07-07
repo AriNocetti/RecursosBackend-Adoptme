@@ -18,23 +18,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/MockPetsResponse'
               example:
-                status: "success"
-                payload: [
-                  {
-                    name: "Fluffy",
-                    specie: "cat",
-                    birthDate: "2020-05-10T10:30:00.000Z",
-                    adopted: false,
-                    image: "https://loremflickr.com/320/240/pet"
-                  },
-                  {
-                    name: "Rex",
-                    specie: "dog",
-                    birthDate: "2019-03-15T14:20:00.000Z",
-                    adopted: false,
-                    image: "https://loremflickr.com/320/240/pet"
-                  }
-                ]
+                status: 'success'
+                payload:
+                  [
+                    {
+                      name: 'Fluffy',
+                      specie: 'cat',
+                      birthDate: '2020-05-10T10:30:00.000Z',
+                      adopted: false,
+                      image: 'https://loremflickr.com/320/240/pet',
+                    },
+                    {
+                      name: 'Rex',
+                      specie: 'dog',
+                      birthDate: '2019-03-15T14:20:00.000Z',
+                      adopted: false,
+                      image: 'https://loremflickr.com/320/240/pet',
+                    },
+                  ]
         '401':
           $ref: '../components.yaml#/components/responses/Unauthorized'
         '500':
@@ -44,8 +45,8 @@ paths:
               schema:
                 $ref: '../components.yaml#/components/schemas/ErrorResponse'
               example:
-                status: "error"
-                error: "Failed to generate pets"
+                status: 'error'
+                error: 'Failed to generate pets'
 
   /api/mocks/mockingusers:
     get:
@@ -66,33 +67,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/MockUsersResponse'
               example:
-                status: "success"
-                payload: [
-                  {
-                    _id: "6579f48e9b0c5d8a0c5e0b1a",
-                    first_name: "John",
-                    last_name: "Doe",
-                    email: "john.doe@example.com",
-                    password: "$2b$10$X7ZYdD6A2Y3X9pX9X7ZYdD6A2Y3X9pX9",
-                    role: "user",
-                    pets: [],
-                    __v: 0,
-                    last_connection: "2023-12-15T10:30:00.000Z",
-                    documents: []
-                  },
-                  {
-                    _id: "6579f48e9b0c5d8a0c5e0b1b",
-                    first_name: "Jane",
-                    last_name: "Smith",
-                    email: "jane.smith@example.com",
-                    password: "$2b$10$X7ZYdD6A2Y3X9pX9X7ZYdD6A2Y3X9pX9",
-                    role: "admin",
-                    pets: [],
-                    __v: 0,
-                    last_connection: "2023-12-14T15:45:00.000Z",
-                    documents: []
-                  }
-                ]
+                status: 'success'
+                payload:
+                  [
+                    {
+                      _id: '6579f48e9b0c5d8a0c5e0b1a',
+                      first_name: 'John',
+                      last_name: 'Doe',
+                      email: 'john.doe@example.com',
+                      password: '$2b$10$X7ZYdD6A2Y3X9pX9X7ZYdD6A2Y3X9pX9',
+                      role: 'user',
+                      pets: [],
+                      __v: 0,
+                      last_connection: '2023-12-15T10:30:00.000Z',
+                      documents: [],
+                    },
+                    {
+                      _id: '6579f48e9b0c5d8a0c5e0b1b',
+                      first_name: 'Jane',
+                      last_name: 'Smith',
+                      email: 'jane.smith@example.com',
+                      password: '$2b$10$X7ZYdD6A2Y3X9pX9X7ZYdD6A2Y3X9pX9',
+                      role: 'admin',
+                      pets: [],
+                      __v: 0,
+                      last_connection: '2023-12-14T15:45:00.000Z',
+                      documents: [],
+                    },
+                  ]
 
   /api/mocks/generateData:
     post:
@@ -134,21 +136,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/MockDataResponse'
               example:
-                status: "success"
+                status: 'success'
                 payload:
-                  users: 
-                    - first_name: "John"
-                      last_name: "Doe"
-                      email: "john.doe@example.com"
-                      password: "$2b$10$X7ZYdD6A2Y3X9pX9X7ZYdD6A2Y3X9pX9"
-                      role: "user"
+                  users:
+                    - first_name: 'John'
+                      last_name: 'Doe'
+                      email: 'john.doe@example.com'
+                      password: '$2b$10$X7ZYdD6A2Y3X9pX9X7ZYdD6A2Y3X9pX9'
+                      role: 'user'
                       pets: []
-                  pets: 
-                    - name: "Fluffy"
-                      specie: "cat"
-                      birthDate: "2020-05-10T10:30:00.000Z"
+                  pets:
+                    - name: 'Fluffy'
+                      specie: 'cat'
+                      birthDate: '2020-05-10T10:30:00.000Z'
                       adopted: false
-                      image: "https://loremflickr.com/320/240/pet"
+                      image: 'https://loremflickr.com/320/240/pet'
         '401':
           $ref: '../components.yaml#/components/responses/Unauthorized'
         '500':
@@ -158,8 +160,8 @@ paths:
               schema:
                 $ref: '../components.yaml#/components/schemas/ErrorResponse'
               example:
-                status: "error"
-                error: "Failed to generate data"
+                status: 'error'
+                error: 'Failed to generate data'
 
 components:
   schemas:
@@ -169,16 +171,16 @@ components:
         name:
           type: string
           description: Nombre de la mascota
-          example: "Fluffy"
+          example: 'Fluffy'
         specie:
           type: string
           description: Especie de la mascota
-          example: "cat"
+          example: 'cat'
         birthDate:
           type: string
           format: date-time
           description: Fecha de nacimiento de la mascota
-          example: "2020-05-10T10:30:00.000Z"
+          example: '2020-05-10T10:30:00.000Z'
         adopted:
           type: boolean
           description: Indica si la mascota ha sido adoptada
@@ -188,7 +190,7 @@ components:
           type: string
           format: uri
           description: URL de la imagen de la mascota
-          example: "https://loremflickr.com/320/240/pet"
+          example: 'https://loremflickr.com/320/240/pet'
       required:
         - name
         - specie
@@ -202,29 +204,29 @@ components:
           type: string
           format: ObjectId
           description: ID único de MongoDB
-          example: "6579f48e9b0c5d8a0c5e0b1a"
+          example: '6579f48e9b0c5d8a0c5e0b1a'
         first_name:
           type: string
           description: Nombre del usuario
-          example: "John"
+          example: 'John'
         last_name:
           type: string
           description: Apellido del usuario
-          example: "Doe"
+          example: 'Doe'
         email:
           type: string
           format: email
           description: Correo electrónico del usuario
-          example: "john.doe@example.com"
+          example: 'john.doe@example.com'
         password:
           type: string
           description: Contraseña hasheada del usuario
-          example: "$2b$10$X7ZYdD6A2Y3X9pX9X7ZYdD6A2Y3X9pX9"
+          example: '$2b$10$X7ZYdD6A2Y3X9pX9X7ZYdD6A2Y3X9pX9'
         role:
           type: string
-          enum: ["user", "admin"]
+          enum: ['user', 'admin']
           description: Rol del usuario
-          example: "user"
+          example: 'user'
         pets:
           type: array
           description: Lista de IDs de mascotas asociadas al usuario
@@ -242,7 +244,7 @@ components:
           type: string
           format: date-time
           description: Fecha de la última conexión del usuario
-          example: "2023-12-15T10:30:00.000Z"
+          example: '2023-12-15T10:30:00.000Z'
         documents:
           type: array
           description: Documentos asociados al usuario
@@ -262,9 +264,9 @@ components:
       properties:
         status:
           type: string
-          enum: ["success"]
+          enum: ['success']
           description: Estado de la respuesta
-          example: "success"
+          example: 'success'
         payload:
           type: array
           description: Lista de mascotas generadas
@@ -279,9 +281,9 @@ components:
       properties:
         status:
           type: string
-          enum: ["success"]
+          enum: ['success']
           description: Estado de la respuesta
-          example: "success"
+          example: 'success'
         payload:
           type: array
           description: Lista de usuarios generados
@@ -296,9 +298,9 @@ components:
       properties:
         status:
           type: string
-          enum: ["success"]
+          enum: ['success']
           description: Estado de la respuesta
-          example: "success"
+          example: 'success'
         payload:
           type: object
           properties:
@@ -319,8 +321,6 @@ components:
         - status
         - payload
 
-
-
   responses:
     Unauthorized:
       description: No autorizado. El usuario no está autenticado o no tiene permisos.
@@ -329,8 +329,8 @@ components:
           schema:
             $ref: '../components.yaml#/components/schemas/ErrorResponse'
           example:
-            status: "error"
-            error: "Unauthorized"
+            status: 'error'
+            error: 'Unauthorized'
 
     ServerError:
       description: Error interno del servidor
@@ -339,5 +339,5 @@ components:
           schema:
             $ref: '../components.yaml#/components/schemas/ErrorResponse'
           example:
-            status: "error"
-            error: "Internal server error"
+            status: 'error'
+            error: 'Internal server error'

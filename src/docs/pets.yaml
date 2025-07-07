@@ -14,30 +14,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/PetsListResponse'
               example:
-                status: "success"
-                payload: [
-                  {
-                    _id: "60d0fe4f5311236168a109ca",
-                    name: "Puchini",
-                    specie: "Perro",
-                    birthDate: "2021-01-15T00:00:00.000Z",
-                    adopted: false,
-                    owner: null,
-                    image: "/img/pets/puchini.jpg"
-                  },
-                  {
-                    _id: "60d0fe4f5311236168a109cb",
-                    name: "Firulais",
-                    specie: "Perro",
-                    birthDate: "2020-03-10T00:00:00.000Z",
-                    adopted: true,
-                    owner: "60d0fe4f5311236168a109cc",
-                    image: "/img/pets/firulais.jpg"
-                  }
-                ]
+                status: 'success'
+                payload:
+                  [
+                    {
+                      _id: '60d0fe4f5311236168a109ca',
+                      name: 'Puchini',
+                      specie: 'Perro',
+                      birthDate: '2021-01-15T00:00:00.000Z',
+                      adopted: false,
+                      owner: null,
+                      image: '/img/pets/puchini.jpg',
+                    },
+                    {
+                      _id: '60d0fe4f5311236168a109cb',
+                      name: 'Firulais',
+                      specie: 'Perro',
+                      birthDate: '2020-03-10T00:00:00.000Z',
+                      adopted: true,
+                      owner: '60d0fe4f5311236168a109cc',
+                      image: '/img/pets/firulais.jpg',
+                    },
+                  ]
         '500':
           $ref: '#/components/responses/ServerError'
-    
+
     post:
       tags:
         - Pets
@@ -51,9 +52,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PetInput'
             example:
-              name: "Puchini"
-              specie: "Perro"
-              birthDate: "2021-01-15T00:00:00.000Z"
+              name: 'Puchini'
+              specie: 'Perro'
+              birthDate: '2021-01-15T00:00:00.000Z'
       responses:
         '200':
           description: La mascota fue creada exitosamente
@@ -62,12 +63,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/PetResponse'
               example:
-                status: "success"
+                status: 'success'
                 payload:
-                  _id: "60d0fe4f5311236168a109ca"
-                  name: "Puchini"
-                  specie: "Perro"
-                  birthDate: "2021-01-15T00:00:00.000Z"
+                  _id: '60d0fe4f5311236168a109ca'
+                  name: 'Puchini'
+                  specie: 'Perro'
+                  birthDate: '2021-01-15T00:00:00.000Z'
                   adopted: false
                   owner: null
                   image: null
@@ -78,11 +79,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
-                status: "error"
-                error: "Incomplete values"
+                status: 'error'
+                error: 'Incomplete values'
         '500':
           $ref: '#/components/responses/ServerError'
-  
+
   /api/pets/{pid}:
     put:
       tags:
@@ -98,7 +99,7 @@ paths:
           schema:
             type: string
             format: ObjectId
-          example: "60d0fe4f5311236168a109ca"
+          example: '60d0fe4f5311236168a109ca'
       requestBody:
         required: true
         content:
@@ -106,10 +107,10 @@ paths:
             schema:
               $ref: '#/components/schemas/PetUpdate'
             example:
-              name: "Puchini Actualizado"
-              specie: "Perro"
+              name: 'Puchini Actualizado'
+              specie: 'Perro'
               adopted: true
-              owner: "60d0fe4f5311236168a109cc"
+              owner: '60d0fe4f5311236168a109cc'
       responses:
         '200':
           description: Mascota actualizada exitosamente
@@ -118,13 +119,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/SuccessMessage'
               example:
-                status: "success"
-                message: "pet updated"
+                status: 'success'
+                message: 'pet updated'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-    
+
     delete:
       tags:
         - Pets
@@ -139,7 +140,7 @@ paths:
           schema:
             type: string
             format: ObjectId
-          example: "60d0fe4f5311236168a109ca"
+          example: '60d0fe4f5311236168a109ca'
       responses:
         '200':
           description: Mascota eliminada exitosamente
@@ -148,8 +149,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/SuccessMessage'
               example:
-                status: "success"
-                message: "pet deleted"
+                status: 'success'
+                message: 'pet deleted'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -176,15 +177,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/PetResponse'
               example:
-                status: "success"
+                status: 'success'
                 payload:
-                  _id: "60d0fe4f5311236168a109ca"
-                  name: "Puchini"
-                  specie: "Perro"
-                  birthDate: "2021-01-15T00:00:00.000Z"
+                  _id: '60d0fe4f5311236168a109ca'
+                  name: 'Puchini'
+                  specie: 'Perro'
+                  birthDate: '2021-01-15T00:00:00.000Z'
                   adopted: false
                   owner: null
-                  image: "/img/pets/puchini.jpg"
+                  image: '/img/pets/puchini.jpg'
         '400':
           description: Valores incompletos
           content:
@@ -192,8 +193,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
-                status: "error"
-                error: "Incomplete values"
+                status: 'error'
+                error: 'Incomplete values'
         '500':
           $ref: '#/components/responses/ServerError'
 
@@ -206,20 +207,20 @@ components:
           type: string
           format: ObjectId
           description: ID autogenerado de la mascota
-          example: "60d0fe4f5311236168a109ca"
+          example: '60d0fe4f5311236168a109ca'
         name:
           type: string
           description: Nombre de la mascota
-          example: "Puchini"
+          example: 'Puchini'
         specie:
           type: string
           description: Especie de la mascota
-          example: "Perro"
+          example: 'Perro'
         birthDate:
           type: string
           format: date-time
           description: Fecha de nacimiento de la mascota
-          example: "2021-01-15T00:00:00.000Z"
+          example: '2021-01-15T00:00:00.000Z'
         adopted:
           type: boolean
           description: Indica si la mascota ha sido adoptada
@@ -235,48 +236,48 @@ components:
           type: string
           description: Ruta de la imagen de la mascota
           nullable: true
-          example: "/img/pets/puchini.jpg"
+          example: '/img/pets/puchini.jpg'
       required:
         - name
         - specie
-    
+
     PetInput:
       type: object
       properties:
         name:
           type: string
           description: Nombre de la mascota
-          example: "Puchini"
+          example: 'Puchini'
         specie:
           type: string
           description: Especie de la mascota
-          example: "Perro"
+          example: 'Perro'
         birthDate:
           type: string
           format: date-time
           description: Fecha de nacimiento de la mascota
-          example: "2021-01-15T00:00:00.000Z"
+          example: '2021-01-15T00:00:00.000Z'
       required:
         - name
         - specie
         - birthDate
-    
+
     PetUpdate:
       type: object
       properties:
         name:
           type: string
           description: Nombre de la mascota
-          example: "Puchini Actualizado"
+          example: 'Puchini Actualizado'
         specie:
           type: string
           description: Especie de la mascota
-          example: "Perro"
+          example: 'Perro'
         birthDate:
           type: string
           format: date-time
           description: Fecha de nacimiento de la mascota
-          example: "2021-01-15T00:00:00.000Z"
+          example: '2021-01-15T00:00:00.000Z'
         adopted:
           type: boolean
           description: Estado de adopción de la mascota
@@ -285,24 +286,24 @@ components:
           type: string
           format: ObjectId
           description: ID del usuario dueño
-          example: "60d0fe4f5311236168a109cc"
-    
+          example: '60d0fe4f5311236168a109cc'
+
     PetWithImageInput:
       type: object
       properties:
         name:
           type: string
           description: Nombre de la mascota
-          example: "Puchini"
+          example: 'Puchini'
         specie:
           type: string
           description: Especie de la mascota
-          example: "Perro"
+          example: 'Perro'
         birthDate:
           type: string
           format: date-time
           description: Fecha de nacimiento de la mascota
-          example: "2021-01-15T00:00:00.000Z"
+          example: '2021-01-15T00:00:00.000Z'
         image:
           type: string
           format: binary
@@ -311,15 +312,15 @@ components:
         - name
         - specie
         - birthDate
-    
+
     PetsListResponse:
       type: object
       properties:
         status:
           type: string
-          enum: ["success"]
+          enum: ['success']
           description: Estado de la respuesta
-          example: "success"
+          example: 'success'
         payload:
           type: array
           description: Lista de mascotas
@@ -328,33 +329,33 @@ components:
       required:
         - status
         - payload
-    
+
     PetResponse:
       type: object
       properties:
         status:
           type: string
-          enum: ["success"]
+          enum: ['success']
           description: Estado de la respuesta
-          example: "success"
+          example: 'success'
         payload:
           $ref: '#/components/schemas/Pet'
       required:
         - status
         - payload
-    
+
     SuccessMessage:
       type: object
       properties:
         status:
           type: string
-          enum: ["success"]
+          enum: ['success']
           description: Estado de la respuesta
-          example: "success"
+          example: 'success'
         message:
           type: string
           description: Mensaje descriptivo del resultado
-          example: "pet updated"
+          example: 'pet updated'
       required:
         - status
         - message

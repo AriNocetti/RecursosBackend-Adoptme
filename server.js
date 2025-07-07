@@ -1,7 +1,8 @@
-import cluster from "cluster";
-import app from "./src/app.js";
-import { config } from "./src/config/config.js";
-import { logger } from "./src/config/logger.js";
+import cluster from 'cluster';
+
+import app from './src/app.js';
+import config from './src/config/config.js';
+import { logger } from './src/config/logger.js';
 
 // Definimos el puerto que va a usar el servidor
 const PORT = config.PORT || 3000;
@@ -22,40 +23,37 @@ const startServer = () => {
 
 // Implementación de clusterización
 if (clusterEnabled && cluster.isPrimary) {
-  logger.info(
-    `Proceso primario PID ${process.pid} | Generando ${numWorkers} workers...`
-  );
+  logger.info(`Proceso primario PID ${process.pid} | Generando ${numWorkers} workers...`);
 
   // Crear workers según la configuración
-  for (let i = 0; i < numWorkers; i++) {
+  for (let i = 0; i < numWorkers; i += 1) {
     cluster.fork();
   }
 
   // Manejar mensajes de los workers
-  cluster.on("message", (worker, message) => {
+  cluster.on('message', (worker, message) => {
     logger.debug(`Mensaje del worker ${worker.id}: ${JSON.stringify(message)}`);
   });
 
   // Manejar desconexiones y crear nuevos workers si es necesario
-  cluster.on("disconnect", (worker) => {
+  cluster.on('disconnect', worker => {
     const message = `Worker PID ${worker.process.pid} (ID: ${worker.id}) desconectado. Creando nuevo worker...`;
     logger.warning(message);
     cluster.fork();
   });
 
   // Manejar salidas de workers
-  cluster.on("exit", (worker, code, signal) => {
+  cluster.on('exit', (worker, code, signal) => {
     const message = `Worker PID ${worker.process.pid} (ID: ${worker.id}) terminado con código ${code} y señal ${signal}`;
     logger.warning(message);
   });
 } else {
   // Proceso worker o modo sin cluster
-  const server = startServer();
-  
+  // puede guardarse como server en una constante
+  startServer();
+
   if (clusterEnabled) {
-    logger.info(
-      `Worker (process) PID ${process.pid} (ID: ${cluster.worker.id}) iniciado`
-    );
+    logger.info(`Worker (process) PID ${process.pid} (ID: ${cluster.worker.id}) iniciado`);
   } else {
     logger.info(`Servidor en modo single-thread, PID ${process.pid}`);
   }

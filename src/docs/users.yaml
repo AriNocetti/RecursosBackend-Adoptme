@@ -30,7 +30,7 @@ components:
                 description: Ruta del documento
         role:
           type: string
-          description: "Rol del usuario (default: user)"
+          description: 'Rol del usuario (default: user)'
         pets:
           type: array
           items:
@@ -51,7 +51,7 @@ paths:
       tags:
         - Users
       responses:
-        "200":
+        '200':
           description: Lista de usuarios recuperada con éxito
           content:
             application/json:
@@ -64,7 +64,7 @@ paths:
                   payload:
                     type: array
                     items:
-                      $ref: "#/components/schemas/User"
+                      $ref: '#/components/schemas/User'
           links:
             getUserById:
               operationId: getUserById
@@ -73,8 +73,8 @@ paths:
                 detalles específicos de un usuario
               parameters:
                 uid: '$response.body#/payload/0/_id'
-              
-        "500":
+
+        '500':
           description: Error interno del servidor
 
   /api/users/{uid}:
@@ -91,7 +91,7 @@ paths:
             type: string
       operationId: getUserById
       responses:
-        "200":
+        '200':
           description: Usuario encontrado
           content:
             application/json:
@@ -102,7 +102,7 @@ paths:
                     type: string
                     example: success
                   payload:
-                    $ref: "#/components/schemas/User"
+                    $ref: '#/components/schemas/User'
           links:
             updateUser:
               operationId: updateUser
@@ -116,7 +116,7 @@ paths:
                 El ID de usuario obtenido puede usarse para eliminar el usuario
               parameters:
                 uid: '$response.body#/payload/_id'
-        "404":
+        '404':
           description: Usuario no encontrado
           content:
             application/json:
@@ -129,7 +129,7 @@ paths:
                   error:
                     type: string
                     example: User not found
-    
+
     put:
       summary: Actualiza un usuario por ID
       operationId: updateUser
@@ -156,7 +156,7 @@ paths:
                 email:
                   type: string
       responses:
-        "200":
+        '200':
           description: Usuario actualizado
           content:
             application/json:
@@ -169,7 +169,7 @@ paths:
                   message:
                     type: string
                     example: User updated
-        "404":
+        '404':
           description: Usuario no encontrado
           content:
             application/json:
@@ -182,7 +182,7 @@ paths:
                   error:
                     type: string
                     example: User not found
-    
+
     delete:
       summary: Elimina un usuario por ID
       operationId: deleteUser
@@ -196,7 +196,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Usuario eliminado
           content:
             application/json:
@@ -209,7 +209,7 @@ paths:
                   message:
                     type: string
                     example: User deleted
-        "404":
+        '404':
           description: Usuario no encontrado
 
   /api/users/{uid}/documents:
@@ -238,7 +238,7 @@ paths:
                     format: binary
                   description: Archivos a subir
       responses:
-        "200":
+        '200':
           description: Documentos subidos exitosamente
           content:
             application/json:
