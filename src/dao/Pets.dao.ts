@@ -5,23 +5,23 @@ export default class Pet {
     this.model = petModel;
   }
 
-  get(params) {
+  get(params: any) {
     return this.model.find(params);
   }
 
-  getBy(params) {
+  getBy(params: any) {
     return this.model.findOne(params);
   }
 
-  save(doc) {
+  save(doc: any) {
     return this.model.create(doc);
   }
 
-  update(id, doc) {
+  update(id: any, doc: any) {
     return this.model.findByIdAndUpdate(id, { $set: doc });
   }
 
-  delete(id) {
+  delete(id: any) {
     return this.model.findByIdAndDelete(id);
   }
 }

@@ -1,6 +1,12 @@
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'chai... Remove this comment to see the full error message
 import { expect } from 'chai';
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'moch... Remove this comment to see the full error message
 import { describe, it } from 'mocha';
 import mongoose from 'mongoose';
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'supe... Remove this comment to see the full error message
 import supertest from 'supertest';
 
 import app from '../src/app.js';
@@ -8,6 +14,7 @@ import app from '../src/app.js';
 const MONGO_URI = process.env.MONGO_DB_URL;
 
 await mongoose
+  // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
   .connect(MONGO_URI)
   .then(() => {
     return console.log('Connected to MongoDB for testing');
@@ -24,10 +31,14 @@ const request = supertest(app);
 
 describe('Pruebas de integración en ADOPTME /api/pets', () => {
   describe('Pruebas básicas (sin subir imágenes)', () => {
+
+    // @ts-expect-error TS(2304): Cannot find name 'before'.
     before(async function () {
       // console.log(".......IN BEFORE........");
       await mongoose.connection.collection('pets').deleteMany({ name: 'Richard' });
     });
+
+    // @ts-expect-error TS(2304): Cannot find name 'after'.
     after(async function () {
       // console.log(".......IN BEFORE........");
       await mongoose.connection.collection('pets').deleteMany({ name: 'Richard' });

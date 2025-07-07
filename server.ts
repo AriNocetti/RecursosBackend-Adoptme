@@ -53,6 +53,8 @@ if (clusterEnabled && cluster.isPrimary) {
   startServer();
 
   if (clusterEnabled) {
+
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     logger.info(`Worker (process) PID ${process.pid} (ID: ${cluster.worker.id}) iniciado`);
   } else {
     logger.info(`Servidor en modo single-thread, PID ${process.pid}`);

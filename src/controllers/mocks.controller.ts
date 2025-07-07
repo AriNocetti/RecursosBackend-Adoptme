@@ -15,7 +15,7 @@ import { createHash } from '../utils/index.js';
 //     } catch (error) { }
 // };
 
-const mockingPets = async (req, res) => {
+const mockingPets = async (req: any, res: any) => {
   try {
     const num = 100;
     const pets = [];
@@ -39,7 +39,7 @@ const mockingPets = async (req, res) => {
   }
 };
 
-const mockingUsers = async (req, res) => {
+const mockingUsers = async (req: any, res: any) => {
   try {
     const num = 50;
     const users = [];
@@ -55,6 +55,8 @@ const mockingUsers = async (req, res) => {
         last_name: faker.person.lastName(),
         email: faker.internet.email(),
         password: hashedPassword,
+
+        // @ts-expect-error TS(2339): Property 'arrayElement' does not exist on type 'He... Remove this comment to see the full error message
         role: faker.helpers.arrayElement(['user', 'admin']),
         pets: [],
         __v: 0,
@@ -73,7 +75,7 @@ const mockingUsers = async (req, res) => {
   }
 };
 
-const generateData = async (req, res) => {
+const generateData = async (req: any, res: any) => {
   try {
     const { users = 0, pets = 0 } = req.body;
 
@@ -90,6 +92,8 @@ const generateData = async (req, res) => {
         last_name: faker.person.lastName(),
         email: faker.internet.email(),
         password: hashedPassword,
+
+        // @ts-expect-error TS(2339): Property 'arrayElement' does not exist on type 'He... Remove this comment to see the full error message
         role: faker.helpers.arrayElement(['user', 'admin']),
         pets: [],
         __v: 0,

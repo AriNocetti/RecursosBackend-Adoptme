@@ -74,7 +74,7 @@ if (config.MODE === 'DEV') {
 }
 
 //* Middleware para inyectar el logger en cada request
-export const middLogg = (req, res, next) => {
+export const middLogg = (req: any, res: any, next: any) => {
   req.logger = logger;
   next();
 };

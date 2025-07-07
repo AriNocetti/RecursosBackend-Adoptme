@@ -1,10 +1,12 @@
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'json... Remove this comment to see the full error message
 import jwt from 'jsonwebtoken';
 
 import UserDTO from '../dto/User.dto.js';
 import { usersService } from '../services/index.js';
 import { createHash, passwordValidation } from '../utils/index.js';
 
-const register = async (req, res) => {
+const register = async (req: any, res: any) => {
   try {
     const { first_name: firstName, last_name: lastName, email, password } = req.body;
     if (!firstName || !lastName || !email || !password)
@@ -26,7 +28,7 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const login = async (req: any, res: any) => {
   try {
     const { email, password } = req.body;
     if (!email || !password)
@@ -48,7 +50,7 @@ const login = async (req, res) => {
   }
 };
 
-const current = async (req, res) => {
+const current = async (req: any, res: any) => {
   try {
     const cookie = req.cookies.coderCookie;
     if (!cookie) return res.status(401).send({ status: 'error', error: 'No autenticado' });
@@ -60,7 +62,7 @@ const current = async (req, res) => {
   }
 };
 
-const unprotectedLogin = async (req, res) => {
+const unprotectedLogin = async (req: any, res: any) => {
   try {
     const { email, password } = req.body;
     if (!email || !password)
@@ -79,7 +81,7 @@ const unprotectedLogin = async (req, res) => {
     return res.status(500).send({ status: 'error', error: 'Error al iniciar sesión' });
   }
 };
-const unprotectedCurrent = async (req, res) => {
+const unprotectedCurrent = async (req: any, res: any) => {
   try {
     const cookie = req.cookies.unprotectedCookie;
     if (!cookie) return res.status(401).send({ status: 'error', error: 'No autenticado' });
@@ -97,7 +99,7 @@ const unprotectedCurrent = async (req, res) => {
 };
 
 // Logout: borra la cookie y actualiza last_connection
-const logout = async (req, res) => {
+const logout = async (req: any, res: any) => {
   try {
     const cookie = req.cookies.coderCookie;
     if (!cookie) return res.status(400).send({ status: 'error', error: 'No session' });

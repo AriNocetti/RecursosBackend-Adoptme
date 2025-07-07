@@ -7,7 +7,7 @@ export default class UserRepository extends GenericRepository {
   // El constructor se hereda automáticamente de GenericRepository
   // seria inutil agregarlo ya que no agrega funcionalidad
 
-  getUserByEmail = email => this.getBy({ email });
+  getUserByEmail = (email: any) => this.getBy({ email });
 
-  getUserById = id => this.getBy({ _id: id });
+  getUserById = (id: any) => this.getBy({ _id: id });
 }

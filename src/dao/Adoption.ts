@@ -1,27 +1,28 @@
-import userModel from './models/User.js';
+import adoptionModel from './models/Adoption.js';
 
-export default class Users {
+export default class Adoption {
+  private model: any;
   constructor() {
-    this.model = userModel;
+    this.model = adoptionModel;
   }
 
-  get(params) {
+  get(params: any) {
     return this.model.find(params);
   }
 
-  getBy(params) {
+  getBy(params: any) {
     return this.model.findOne(params);
   }
 
-  save(doc) {
+  save(doc: any) {
     return this.model.create(doc);
   }
 
-  update(id, doc) {
+  update(id: any, doc: any) {
     return this.model.findByIdAndUpdate(id, { $set: doc });
   }
 
-  delete(id) {
+  delete(id: any) {
     return this.model.findByIdAndDelete(id);
   }
 }

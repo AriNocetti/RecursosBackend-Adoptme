@@ -1,7 +1,13 @@
 import 'dotenv/config';
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'cook... Remove this comment to see the full error message
 import cookieParser from 'cookie-parser';
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'expr... Remove this comment to see the full error message
 import express from 'express';
 import mongoose from 'mongoose';
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'swag... Remove this comment to see the full error message
 import swaggerUi from 'swagger-ui-express';
 
 import config from './config/config.js';
@@ -20,7 +26,11 @@ mongoose.connection.on('connected', () => {
 });
 
 mongoose.connection.on('error', err => {
+
+  // @ts-expect-error TS(2339): Property 'fatal' does not exist on type 'Logger'.
   if (logger && logger.fatal) {
+
+    // @ts-expect-error TS(2339): Property 'fatal' does not exist on type 'Logger'.
     logger.fatal('❌ Error al conectar a MongoDB:', err);
   } else {
     console.error('❌ Error al conectar a MongoDB:', err);
@@ -40,7 +50,7 @@ app.use('/api/adoptions', adoptionsRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/mocks', mocksRouter);
 
-app.get('/loggerTest', (req, res) => {
+app.get('/loggerTest', (req: any, res: any) => {
   req.logger.debug('Debug log test');
   req.logger.http('HTTP log test');
   req.logger.info('Info log test');
@@ -59,6 +69,8 @@ app.get('/loggerTest', (req, res) => {
 app.use(errorHandler);
 
 process.on('unhandledRejection', (reason, p) => {
+
+  // @ts-expect-error TS(2339): Property 'fatal' does not exist on type 'Logger'.
   logger.fatal('unhandledRejection', reason, p);
   // I just caught an unhandled promise rejection,
   // since we already have fallback handler for unhandled errors (see below),
@@ -67,6 +79,8 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 process.on('uncaughtException', error => {
+
+  // @ts-expect-error TS(2339): Property 'fatal' does not exist on type 'Logger'.
   logger.fatal('uncaughtException', error);
   // pendiente ver si voy a salir del proceso
   // process.exit(1);

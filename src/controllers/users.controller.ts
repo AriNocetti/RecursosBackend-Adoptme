@@ -1,18 +1,18 @@
 import { usersService } from '../services/index.js';
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req: any, res: any) => {
   const users = await usersService.getAll();
   res.send({ status: 'success', payload: users });
 };
 
-const getUser = async (req, res) => {
+const getUser = async (req: any, res: any) => {
   const userId = req.params.uid;
   const user = await usersService.getUserById(userId);
   if (!user) return res.status(404).send({ status: 'error', error: 'User not found' });
   return res.send({ status: 'success', payload: user });
 };
 
-const updateUser = async (req, res) => {
+const updateUser = async (req: any, res: any) => {
   const updateBody = req.body;
   const userId = req.params.uid;
   const user = await usersService.getUserById(userId);
@@ -21,13 +21,13 @@ const updateUser = async (req, res) => {
   return res.send({ status: 'success', message: 'User updated' });
 };
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req: any, res: any) => {
   const userId = req.params.uid;
   await usersService.getUserById(userId);
   return res.send({ status: 'success', message: 'User deleted' });
 };
 
-const uploadDocuments = async (req, res) => {
+const uploadDocuments = async (req: any, res: any) => {
   try {
     const userId = req.params.uid;
     const user = await usersService.getUserById(userId);
@@ -39,9 +39,9 @@ const uploadDocuments = async (req, res) => {
     }
 
     // Crear array de documentos para agregar al usuario
-    const documents = req.files.map(file => ({
+    const documents = req.files.map((file: any) => ({
       name: file.originalname,
-      reference: `/documents/${file.filename}`,
+      reference: `/documents/${file.filename}`
     }));
 
     // Actualizar documentos del usuario

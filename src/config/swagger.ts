@@ -1,3 +1,5 @@
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'swag... Remove this comment to see the full error message
 import swaggerJsDoc from 'swagger-jsdoc';
 
 // Configuración para documentación manual con YAML

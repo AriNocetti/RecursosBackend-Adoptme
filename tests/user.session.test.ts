@@ -1,6 +1,12 @@
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'chai... Remove this comment to see the full error message
 import { expect } from 'chai';
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'moch... Remove this comment to see the full error message
 import { describe, it, before, after } from 'mocha';
 import mongoose from 'mongoose';
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'supe... Remove this comment to see the full error message
 import supertest from 'supertest';
 
 import app from '../src/app.js';
@@ -15,7 +21,7 @@ const MONGO_URI = process.env.MONGO_DB_URL;
 // const request = supertest("http://localhost:8080");
 const request = supertest(app);
 
-describe('Testing users Api', function () {
+describe('Testing users Api', function(this: any) {
   // Aumenta el timeout por si la conexión es lenta
   this.timeout(6000);
 
@@ -26,6 +32,7 @@ describe('Testing users Api', function () {
     if (mongoose.connection.readyState !== 1) {
       // Solo conectamos si no hay una conexión activa
       await mongoose
+        // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
         .connect(MONGO_URI)
         .then(() => {
           return console.log('Connected to MongoDB for testing');
@@ -46,7 +53,7 @@ describe('Testing users Api', function () {
     this.cookie = null;
   });
 
-  after(async function () {
+  after(async function(this: any) {
     // Limpia la colección de usuarios después de correr los tests
     await mongoose.connection.collection('users').deleteMany({
       email: this.mockUser.email,
@@ -57,7 +64,7 @@ describe('Testing users Api', function () {
   });
 
   // Test 01 - Registro de un User
-  it('Test Registro Usuario: Debe poder registrar correctamente un usuario', async function () {
+  it('Test Registro Usuario: Debe poder registrar correctamente un usuario', async function(this: any) {
     const { statusCode } = await request.post('/api/sessions/register').send(this.mockUser);
 
     expect(statusCode).to.eql(200);
@@ -66,7 +73,11 @@ describe('Testing users Api', function () {
   // Test 02 - Login de un User
   it('Test Login Usuario: Debe poder hacer login correctamente con el usuario registrado previamente y obtener la cookie', async function () {
     const mockLogin = {
+
+      // @ts-expect-error TS(2339): Property 'mockUser' does not exist on type '(Anony... Remove this comment to see the full error message
       email: this.mockUser.email,
+
+      // @ts-expect-error TS(2339): Property 'mockUser' does not exist on type '(Anony... Remove this comment to see the full error message
       password: this.mockUser.password,
     };
 
@@ -85,7 +96,7 @@ describe('Testing users Api', function () {
     expect(this.cookie.value).to.be.ok;
   });
 
-  it('Test Current: Debe poder obtener la información del usuario actual usando la cookie', async function () {
+  it('Test Current: Debe poder obtener la información del usuario actual usando la cookie', async function(this: any) {
     // En lugar de probar la ruta de mascotas con imagen, probamos la ruta current
     // que es más relevante para las sesiones
     const result = await request
@@ -102,7 +113,7 @@ describe('Testing users Api', function () {
     expect(result.body.payload).to.have.property('role');
   });
 
-  it('Test Logout: Debe poder cerrar sesión correctamente', async function () {
+  it('Test Logout: Debe poder cerrar sesión correctamente', async function(this: any) {
     const result = await request
       .post('/api/sessions/logout')
       .set('Cookie', [`${this.cookie.name}=${this.cookie.value}`]);

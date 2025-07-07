@@ -1,6 +1,12 @@
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'chai... Remove this comment to see the full error message
 import { expect } from 'chai';
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'moch... Remove this comment to see the full error message
 import { describe, it } from 'mocha';
 import mongoose from 'mongoose';
+
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'supe... Remove this comment to see the full error message
 import supertest from 'supertest';
 
 import app from '../src/app.js';
