@@ -1,10 +1,8 @@
-
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'expr... Remove this comment to see the full error message
 import { Router } from 'express';
 
-import sessionsController from '../controllers/sessions.controller.js';
+import sessionsController from '../controllers/sessions.controller';
 
-const router = Router();
+const router = Router();    
 
 router.post('/register', sessionsController.register);
 router.post('/login', sessionsController.login);

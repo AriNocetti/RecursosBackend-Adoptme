@@ -1,4 +1,4 @@
-import { usersService } from '../services/index.js';
+import { usersService } from '../services/index';
 
 const getAllUsers = async (req: any, res: any) => {
   const users = await usersService.getAll();
@@ -44,10 +44,8 @@ const uploadDocuments = async (req: any, res: any) => {
       reference: `/documents/${file.filename}`
     }));
 
-    // Actualizar documentos del usuario
-    await usersService.update(userId, {
-      $push: { documents: { $each: documents } },
-    });
+    // Actualizar documentos del usuario usando el método específico
+    await usersService.addDocuments(userId, documents);
 
     return res.send({ status: 'success', message: 'Documents uploaded successfully' });
   } catch (error) {

@@ -1,19 +1,9 @@
 import { faker } from '@faker-js/faker';
 
-import PetDTO from '../dto/Pet.dto.js';
-import { petsService, usersService } from '../services/index.js';
-import { createHash } from '../utils/index.js';
-
-// const index = async (req, res) => {
-//     try {
-//         res.send({
-//             status: "success",
-//             payload: {
-//                 mocks: true,
-//             },
-//         });
-//     } catch (error) { }
-// };
+import PetDTO from '../dto/Pet.dto;
+import { petsService, usersService } from '../services/index;
+import { createHash } from '../utils/index;
+import { IUser } from '../dao/models/User;
 
 const mockingPets = async (req: any, res: any) => {
   try {
@@ -28,10 +18,10 @@ const mockingPets = async (req: any, res: any) => {
         adopted: false,
         image: faker.image.avatar(),
       });
+      // Crear cada mascota individualmente
+      await petsService.create(pet);
       pets.push(pet);
     }
-
-    await petsService.create(pets);
 
     res.status(200).send({ status: 'success', payload: pets });
   } catch (error) {
@@ -49,18 +39,15 @@ const mockingUsers = async (req: any, res: any) => {
       // Generamos un ID de MongoDB simulado
       const mockId = faker.database.mongodbObjectId();
 
-      const user = {
+      const user: IUser = {
         _id: mockId,
         first_name: faker.person.firstName(),
         last_name: faker.person.lastName(),
         email: faker.internet.email(),
         password: hashedPassword,
-
-        // @ts-expect-error TS(2339): Property 'arrayElement' does not exist on type 'He... Remove this comment to see the full error message
         role: faker.helpers.arrayElement(['user', 'admin']),
         pets: [],
-        __v: 0,
-        last_connection: faker.date.recent().toISOString(),
+        last_connection: faker.date.recent(),
         documents: [],
       };
       users.push(user);
@@ -92,12 +79,10 @@ const generateData = async (req: any, res: any) => {
         last_name: faker.person.lastName(),
         email: faker.internet.email(),
         password: hashedPassword,
-
-        // @ts-expect-error TS(2339): Property 'arrayElement' does not exist on type 'He... Remove this comment to see the full error message
         role: faker.helpers.arrayElement(['user', 'admin']),
         pets: [],
         __v: 0,
-        last_connection: faker.date.recent().toISOString(),
+        last_connection: faker.date.recent(),
         documents: [],
       };
       generatedUsers.push(user);
@@ -115,8 +100,14 @@ const generateData = async (req: any, res: any) => {
       generatedPets.push(pet);
     }
 
-    await usersService.create(generatedUsers);
-    await petsService.create(generatedPets);
+    // Crear cada usuario y mascota individualmente
+    for (const user of generatedUsers) {
+      await usersService.create(user);
+    }
+    
+    for (const pet of generatedPets) {
+      await petsService.create(pet);
+    }
 
     res.status(200).send({
       status: 'success',

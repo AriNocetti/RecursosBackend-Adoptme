@@ -1,24 +1,17 @@
-import 'dotenv/config';
-
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'cook... Remove this comment to see the full error message
 import cookieParser from 'cookie-parser';
-
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'expr... Remove this comment to see the full error message
 import express from 'express';
 import mongoose from 'mongoose';
-
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'swag... Remove this comment to see the full error message
 import swaggerUi from 'swagger-ui-express';
 
-import config from './config/config.js';
-import { logger, middLogg } from './config/logger.js';
-import swaggerDocs from './config/swagger.js';
-import adoptionsRouter from './routes/adoption.router.js';
-import mocksRouter from './routes/mocks.router.js';
-import petsRouter from './routes/pets.router.js';
-import sessionsRouter from './routes/sessions.router.js';
-import usersRouter from './routes/users.router.js';
-import { errorHandler } from './utils/CustomError.js';
+import config from './config/config';
+import { logger, middLogg } from './config/logger';
+import swaggerDocs from './config/swagger';
+import adoptionsRouter from './routes/adoption.router';
+import mocksRouter from './routes/mocks.router';
+import petsRouter from './routes/pets.router';
+import sessionsRouter from './routes/sessions.router';
+import usersRouter from './routes/users.router';
+import { errorHandler } from './utils/CustomError';
 
 const app = express();
 mongoose.connection.on('connected', () => {
@@ -27,10 +20,7 @@ mongoose.connection.on('connected', () => {
 
 mongoose.connection.on('error', err => {
 
-  // @ts-expect-error TS(2339): Property 'fatal' does not exist on type 'Logger'.
   if (logger && logger.fatal) {
-
-    // @ts-expect-error TS(2339): Property 'fatal' does not exist on type 'Logger'.
     logger.fatal('❌ Error al conectar a MongoDB:', err);
   } else {
     console.error('❌ Error al conectar a MongoDB:', err);
@@ -70,7 +60,6 @@ app.use(errorHandler);
 
 process.on('unhandledRejection', (reason, p) => {
 
-  // @ts-expect-error TS(2339): Property 'fatal' does not exist on type 'Logger'.
   logger.fatal('unhandledRejection', reason, p);
   // I just caught an unhandled promise rejection,
   // since we already have fallback handler for unhandled errors (see below),
@@ -80,7 +69,6 @@ process.on('unhandledRejection', (reason, p) => {
 
 process.on('uncaughtException', error => {
 
-  // @ts-expect-error TS(2339): Property 'fatal' does not exist on type 'Logger'.
   logger.fatal('uncaughtException', error);
   // pendiente ver si voy a salir del proceso
   // process.exit(1);

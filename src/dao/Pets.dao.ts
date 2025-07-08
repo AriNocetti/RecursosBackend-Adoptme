@@ -1,27 +1,29 @@
-import petModel from './models/Pet.js';
+import petModel, { IPet, PetModelType } from './models/Pet';
+import mongoose from 'mongoose';
 
 export default class Pet {
+  private model: PetModelType;
   constructor() {
-    this.model = petModel;
+    this.model = petModel as PetModelType;
   }
 
-  get(params: any) {
+  get(params: Partial<IPet>) {
     return this.model.find(params);
   }
 
-  getBy(params: any) {
+  getBy(params: Partial<IPet>) {
     return this.model.findOne(params);
   }
 
-  save(doc: any) {
+  save(doc: IPet) {
     return this.model.create(doc);
   }
 
-  update(id: any, doc: any) {
+  update(id: mongoose.Types.ObjectId | string, doc: Partial<IPet>) {
     return this.model.findByIdAndUpdate(id, { $set: doc });
   }
 
-  delete(id: any) {
+  delete(id: mongoose.Types.ObjectId | string) {
     return this.model.findByIdAndDelete(id);
   }
 }

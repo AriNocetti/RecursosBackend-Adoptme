@@ -1,5 +1,4 @@
 
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'swag... Remove this comment to see the full error message
 import swaggerJsDoc from 'swagger-jsdoc';
 
 // Configuración para documentación manual con YAML
@@ -22,10 +21,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ['./src/docs/**/*.yaml', './src/controllers/**/*.js', './src/docs/sessions.yml'], // Configuración para modo mixto (YAML y JSDoc)
-
-  // Configuración alternativa para JSDoc en línea
-  // apis: ['./src/**/*.js'], // o apis: ['./src/*.js'],  apis: ['./src/routes/**/*.js']
+  apis: ['./src/docs/**/*.yaml', './src/docs/sessions.yml'], // Configuración para modo mixto (YAML y JSDoc)
 };
 // Implementamos swagger con los archivos YAML
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

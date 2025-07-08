@@ -1,6 +1,6 @@
-import PetDTO from '../dto/Pet.dto.js';
-import { petsService } from '../services/index.js';
-import __dirname from '../utils/index.js';
+import PetDTO from '../dto/Pet.dto';
+import { petsService } from '../services/index';
+import __dirname from '../utils/index';
 
 const getAllPets = async (req: any, res: any) => {
   const pets = await petsService.getAll();

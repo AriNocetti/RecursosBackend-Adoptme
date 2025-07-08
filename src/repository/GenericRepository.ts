@@ -1,15 +1,38 @@
-export default class GenericRepository {
-  constructor(dao: any) {
+import mongoose from 'mongoose';
+
+// Interfaz genérica para los DAOs
+interface IGenericDAO<T> {
+  get(params: Partial<T>): any; // Mongoose Query o Promise
+  getBy(params: Partial<T>): any; // Mongoose Query o Promise
+  save(doc: T): any; // Mongoose Query o Promise
+  update(id: mongoose.Types.ObjectId | string, doc: Partial<T>): any; // Mongoose Query o Promise
+  delete(id: mongoose.Types.ObjectId | string): any; // Mongoose Query o Promise
+  addDocuments?(userId: mongoose.Types.ObjectId | string, documents: any[]): any; // Método opcional para añadir documentos
+}
+
+// Clase de repositorio genérico tipada
+export default class GenericRepository<T> {
+  private dao: IGenericDAO<T>;
+  
+  constructor(dao: IGenericDAO<T>) {
     this.dao = dao;
   }
 
-  getAll = (params: any) => this.dao.get(params);
+  getAll = (params: Partial<T> = {}) => this.dao.get(params);
 
-  getBy = (params: any) => this.dao.getBy(params);
+  getBy = (params: Partial<T>) => this.dao.getBy(params);
 
-  create = (doc: any) => this.dao.save(doc);
+  create = (doc: T) => this.dao.save(doc);
 
-  update = (id: any, doc: any) => this.dao.update(id, doc);
+  update = (id: mongoose.Types.ObjectId | string, doc: Partial<T>) => this.dao.update(id, doc);
 
-  delete = (id: any) => this.dao.delete(id);
+  delete = (id: mongoose.Types.ObjectId | string) => this.dao.delete(id);
+  
+  // Método genérico para añadir documentos (solo disponible si el DAO lo implementa)
+  addDocuments = (userId: mongoose.Types.ObjectId | string, documents: any[]) => {
+    if (this.dao.addDocuments) {
+      return this.dao.addDocuments(userId, documents);
+    }
+    throw new Error('El método addDocuments no está implementado en este DAO');
+  };
 }

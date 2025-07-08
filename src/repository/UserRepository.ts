@@ -1,13 +1,12 @@
-import GenericRepository from './GenericRepository.js';
+import GenericRepository from './GenericRepository';
+import { IUser } from '../dao/models/User';
+import mongoose from 'mongoose';
 
-export default class UserRepository extends GenericRepository {
-  // constructor(dao) {
-  //   super(dao);
-  // }
+export default class UserRepository extends GenericRepository<IUser> {
   // El constructor se hereda automáticamente de GenericRepository
   // seria inutil agregarlo ya que no agrega funcionalidad
 
-  getUserByEmail = (email: any) => this.getBy({ email });
+  getUserByEmail = (email: string) => this.getBy({ email });
 
-  getUserById = (id: any) => this.getBy({ _id: id });
+  getUserById = (id: mongoose.Types.ObjectId | string) => this.getBy({ _id: id as any });
 }

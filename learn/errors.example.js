@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
+import { logger } from '../src/config/logger';
 
 const app = express();
-const { logger } = require('../src/config/logger.js');
 // Solo fallback, se puede eliminar si solo se usa req.logger
 const port = 3000;
 
@@ -127,4 +127,4 @@ function errorHandle(error, req, res, next) {
   }
 }
 app.use(errorHandle);
-module.exports = app;
+export default app;

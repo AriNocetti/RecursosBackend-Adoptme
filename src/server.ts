@@ -1,8 +1,8 @@
 import cluster from 'cluster';
 
-import app from './src/app.js';
-import config from './src/config/config.js';
-import { logger } from './src/config/logger.js';
+import app from './app';
+import config from './config/config';
+import { logger } from './config/logger';
 
 // Definimos el puerto que va a usar el servidor
 const PORT = config.PORT || 3000;
@@ -53,9 +53,7 @@ if (clusterEnabled && cluster.isPrimary) {
   startServer();
 
   if (clusterEnabled) {
-
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-    logger.info(`Worker (process) PID ${process.pid} (ID: ${cluster.worker.id}) iniciado`);
+    logger.info(`Worker (process) PID ${process.pid} (ID: ${cluster.worker?.id}) iniciado`);
   } else {
     logger.info(`Servidor en modo single-thread, PID ${process.pid}`);
   }

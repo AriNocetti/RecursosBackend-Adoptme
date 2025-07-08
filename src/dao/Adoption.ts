@@ -1,28 +1,29 @@
-import adoptionModel from './models/Adoption.js';
+import adoptionModel, { IAdoption, AdoptionModelType } from './models/Adoption';
+import mongoose from 'mongoose';
 
 export default class Adoption {
-  private model: any;
+  private model: AdoptionModelType;
   constructor() {
-    this.model = adoptionModel;
+    this.model = adoptionModel as AdoptionModelType;
   }
 
-  get(params: any) {
+  get(params: Partial<IAdoption>) {
     return this.model.find(params);
   }
 
-  getBy(params: any) {
+  getBy(params: Partial<IAdoption>) {
     return this.model.findOne(params);
   }
 
-  save(doc: any) {
+  save(doc: IAdoption) {
     return this.model.create(doc);
   }
 
-  update(id: any, doc: any) {
+  update(id: mongoose.Types.ObjectId | string, doc: Partial<IAdoption>) {
     return this.model.findByIdAndUpdate(id, { $set: doc });
   }
 
-  delete(id: any) {
+  delete(id: mongoose.Types.ObjectId | string) {
     return this.model.findByIdAndDelete(id);
   }
 }

@@ -1,5 +1,26 @@
 import mongoose from 'mongoose';
 
+// Definir la interfaz para el documento de usuario
+export interface IUserDocument {
+  name?: string;
+  reference?: string;
+}
+
+export interface IUser {
+  first_name: string;
+  last_name: string;
+  email: string;
+  documents?: IUserDocument[];
+  password: string;
+  role?: string;
+  pets?: { _id: string }[];
+  last_connection?: Date;
+  _id?: string;
+}
+
+// Definir el tipo para el modelo de usuario
+export type UserModelType = mongoose.Model<IUser>;
+
 const collection = 'Users';
 
 const schema = new mongoose.Schema({
@@ -47,6 +68,6 @@ const schema = new mongoose.Schema({
   },
 });
 
-const userModel = mongoose.model(collection, schema);
+const userModel = mongoose.model<IUser>(collection, schema);
 
 export default userModel;

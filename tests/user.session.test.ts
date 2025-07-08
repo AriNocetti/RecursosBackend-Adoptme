@@ -1,15 +1,8 @@
-
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'chai... Remove this comment to see the full error message
 import { expect } from 'chai';
-
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'moch... Remove this comment to see the full error message
-import { describe, it, before, after } from 'mocha';
 import mongoose from 'mongoose';
-
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'supe... Remove this comment to see the full error message
 import supertest from 'supertest';
 
-import app from '../src/app.js';
+import app from '../src/app';
 
 //* Para mantener la validación estricta de consultas
 mongoose.set('strictQuery', true);
@@ -32,8 +25,7 @@ describe('Testing users Api', function(this: any) {
     if (mongoose.connection.readyState !== 1) {
       // Solo conectamos si no hay una conexión activa
       await mongoose
-        // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
-        .connect(MONGO_URI)
+        .connect(MONGO_URI || '')
         .then(() => {
           return console.log('Connected to MongoDB for testing');
         })
@@ -73,11 +65,7 @@ describe('Testing users Api', function(this: any) {
   // Test 02 - Login de un User
   it('Test Login Usuario: Debe poder hacer login correctamente con el usuario registrado previamente y obtener la cookie', async function () {
     const mockLogin = {
-
-      // @ts-expect-error TS(2339): Property 'mockUser' does not exist on type '(Anony... Remove this comment to see the full error message
       email: this.mockUser.email,
-
-      // @ts-expect-error TS(2339): Property 'mockUser' does not exist on type '(Anony... Remove this comment to see the full error message
       password: this.mockUser.password,
     };
 

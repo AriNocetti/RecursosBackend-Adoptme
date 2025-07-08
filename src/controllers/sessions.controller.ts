@@ -1,10 +1,8 @@
-
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'json... Remove this comment to see the full error message
 import jwt from 'jsonwebtoken';
 
-import UserDTO from '../dto/User.dto.js';
-import { usersService } from '../services/index.js';
-import { createHash, passwordValidation } from '../utils/index.js';
+import UserDTO from '../dto/User.dto';
+import { usersService } from '../services/index';
+import { createHash, passwordValidation } from '../utils/index';
 
 const register = async (req: any, res: any) => {
   try {
@@ -103,9 +101,9 @@ const logout = async (req: any, res: any) => {
   try {
     const cookie = req.cookies.coderCookie;
     if (!cookie) return res.status(400).send({ status: 'error', error: 'No session' });
-    const userData = jwt.verify(cookie, 'tokenSecretJWT');
+    const userData = jwt.verify(cookie, 'tokenSecretJWT') as { _id: string }; //fix
     // Actualiza last_connection
-    await usersService.update(userData._id, { last_connection: Date.now() });
+    await usersService.update(userData._id, { last_connection: new Date() });
     return res.clearCookie('coderCookie').send({ status: 'success', message: 'Logged out' });
   } catch (error) {
     return res.status(500).send({ status: 'error', error: 'Error al cerrar sesión' });

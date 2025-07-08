@@ -1,13 +1,14 @@
-import { logger } from '../config/logger.js';
-import errorsDictionary from '../dictionary/errors.dictionary.js';
+import { logger } from '../config/logger';
+import errorsDictionary from '../dictionary/errors.dictionary';
+import { IDictionaryError } from '../dictionary/IDictionaryError';
 
 export class CustomError extends Error {
   // errorKey nose si deberia traer este dato en el obj dictionary error
   // in typescript public readonly ... type string
+  private dictionaryError: IDictionaryError
+  private details: string[]
 
-
-  // @ts-expect-error TS(7006): Parameter 'details' implicitly has an 'any[]' type... Remove this comment to see the full error message
-  constructor(dictionaryError: any, details = []) {
+  constructor(dictionaryError: IDictionaryError, details: string[] = []) {
     if (!dictionaryError) {
       super('Unknown error, this error is not found in dictionary');
       this.dictionaryError = errorsDictionary.INTERNAL_SERVER_ERROR;
@@ -19,8 +20,6 @@ export class CustomError extends Error {
   }
 
   logError() {
-
-    // @ts-expect-error TS(2339): Property 'fatal' does not exist on type 'Logger'.
     logger.fatal(
       this.message,
       this.dictionaryError.code,

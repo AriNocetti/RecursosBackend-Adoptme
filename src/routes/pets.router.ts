@@ -1,9 +1,7 @@
-
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'expr... Remove this comment to see the full error message
 import { Router } from 'express';
 
-import petsController from '../controllers/pets.controller.js';
-import uploader from '../utils/uploader.js';
+import petsController from '../controllers/pets.controller';
+import uploader from '../utils/uploader';
 
 const router = Router();
 

@@ -1,8 +1,8 @@
 
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'mult... Remove this comment to see the full error message
+//  TS(7016): Could not find a declaration file for module 'mult... Remove this comment to see the full error message
 import multer from 'multer';
 
-import __dirname from './index.js';
+import __dirname from './index';
 
 // Función para crear storage configurado según tipo de archivo
 const createStorage = (folder: any) => multer.diskStorage({

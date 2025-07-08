@@ -1,10 +1,9 @@
-// Importaciones necesarias - Winston
 import winston from 'winston';
 
-import errorsDictionary from '../dictionary/errors.dictionary.js';
-import throwLoggerError from '../utils/loggerError.js';
+import errorsDictionary from '../dictionary/errors.dictionary';
+import throwLoggerError from '../utils/loggerError';
 
-import config from './config.js';
+import config from './config';
 
 // Definición de niveles personalizados y colores para los logs
 const nivelesPersonalizados = {
