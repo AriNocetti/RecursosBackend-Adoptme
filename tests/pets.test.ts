@@ -7,7 +7,8 @@ import app from '../src/app';
 
 const MONGO_URI = process.env.MONGO_DB_URL;
 
-await mongoose.connect(MONGO_URI || '')
+await mongoose
+  .connect(MONGO_URI || '')
   .then(() => {
     return console.log('Connected to MongoDB for testing');
   })
@@ -23,7 +24,6 @@ const request = supertest(app);
 
 describe('Pruebas de integración en ADOPTME /api/pets', () => {
   describe('Pruebas básicas (sin subir imágenes)', () => {
-
     before(async function () {
       // console.log(".......IN BEFORE........");
       await mongoose.connection.collection('pets').deleteMany({ name: 'Richard' });

@@ -5,8 +5,9 @@ import { IDictionaryError } from '../dictionary/IDictionaryError';
 export class CustomError extends Error {
   // errorKey nose si deberia traer este dato en el obj dictionary error
   // in typescript public readonly ... type string
-  private dictionaryError: IDictionaryError
-  private details: string[]
+  private dictionaryError: IDictionaryError;
+
+  private details: string[];
 
   constructor(dictionaryError: IDictionaryError, details: string[] = []) {
     if (!dictionaryError) {

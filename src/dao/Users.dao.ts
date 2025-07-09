@@ -1,8 +1,10 @@
-import userModel, { IUser, UserModelType } from './models/User';
 import mongoose from 'mongoose';
+
+import userModel, { IUser, UserModelType } from './models/User';
 
 export default class Users {
   private model: UserModelType;
+
   constructor() {
     this.model = userModel as UserModelType;
   }
@@ -28,10 +30,13 @@ export default class Users {
    * @param userId - ID del usuario
    * @param documents - Array de documentos a añadir
    */
-  addDocuments(userId: mongoose.Types.ObjectId | string, documents: Array<{ name: string; reference: string }>) {
+  addDocuments(
+    userId: mongoose.Types.ObjectId | string,
+    documents: Array<{ name: string; reference: string }>,
+  ) {
     // Usamos $push con $each internamente para agregar múltiples documentos
     return this.model.findByIdAndUpdate(userId, {
-      $push: { documents: { $each: documents } }
+      $push: { documents: { $each: documents } },
     });
   }
 

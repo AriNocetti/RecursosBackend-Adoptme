@@ -1,8 +1,10 @@
-import adoptionModel, { IAdoption, AdoptionModelType } from './models/Adoption';
 import mongoose from 'mongoose';
+
+import adoptionModel, { IAdoption, AdoptionModelType } from './models/Adoption';
 
 export default class Adoption {
   private model: AdoptionModelType;
+
   constructor() {
     this.model = adoptionModel as AdoptionModelType;
   }

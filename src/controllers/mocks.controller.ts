@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
 
+import { IUser } from '../dao/models/User';
 import PetDTO from '../dto/Pet.dto';
 import { petsService, usersService } from '../services/index';
 import { createHash } from '../utils/index';
-import { IUser } from '../dao/models/User';
 
 const mockingPets = async (req: any, res: any) => {
   try {
@@ -104,7 +104,7 @@ const generateData = async (req: any, res: any) => {
     for (const user of generatedUsers) {
       await usersService.create(user);
     }
-    
+
     for (const pet of generatedPets) {
       await petsService.create(pet);
     }

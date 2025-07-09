@@ -1,4 +1,3 @@
-
 import swaggerJsDoc from 'swagger-jsdoc';
 
 // Configuración para documentación manual con YAML

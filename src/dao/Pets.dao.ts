@@ -1,8 +1,10 @@
-import petModel, { IPet, PetModelType } from './models/Pet';
 import mongoose from 'mongoose';
+
+import petModel, { IPet, PetModelType } from './models/Pet';
 
 export default class Pet {
   private model: PetModelType;
+
   constructor() {
     this.model = petModel as PetModelType;
   }

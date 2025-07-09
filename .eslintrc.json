@@ -6,17 +6,33 @@
   },
   "extends": [
     "airbnb-base",
-    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
-    "plugin:promise/recommended"
+    "plugin:import/typescript",
+    "plugin:promise/recommended",
+    "plugin:prettier/recommended"
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["prettier", "mocha", "import", "unused-imports", "promise", "security"],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "prettier", 
+    "mocha", 
+    "import", 
+    "unused-imports", 
+    "promise", 
+    "security"
+  ],
   "rules": {
-    "import/extensions": ["error", "ignorePackages"],
+    "import/extensions": "off",
     "import/order": [
       "error",
       {

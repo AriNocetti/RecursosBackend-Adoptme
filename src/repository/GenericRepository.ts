@@ -13,7 +13,7 @@ interface IGenericDAO<T> {
 // Clase de repositorio genérico tipada
 export default class GenericRepository<T> {
   private dao: IGenericDAO<T>;
-  
+
   constructor(dao: IGenericDAO<T>) {
     this.dao = dao;
   }
@@ -27,7 +27,7 @@ export default class GenericRepository<T> {
   update = (id: mongoose.Types.ObjectId | string, doc: Partial<T>) => this.dao.update(id, doc);
 
   delete = (id: mongoose.Types.ObjectId | string) => this.dao.delete(id);
-  
+
   // Método genérico para añadir documentos (solo disponible si el DAO lo implementa)
   addDocuments = (userId: mongoose.Types.ObjectId | string, documents: any[]) => {
     if (this.dao.addDocuments) {

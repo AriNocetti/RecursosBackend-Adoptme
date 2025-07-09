@@ -19,7 +19,6 @@ mongoose.connection.on('connected', () => {
 });
 
 mongoose.connection.on('error', err => {
-
   if (logger && logger.fatal) {
     logger.fatal('❌ Error al conectar a MongoDB:', err);
   } else {
@@ -59,7 +58,6 @@ app.get('/loggerTest', (req: any, res: any) => {
 app.use(errorHandler);
 
 process.on('unhandledRejection', (reason, p) => {
-
   logger.fatal('unhandledRejection', reason, p);
   // I just caught an unhandled promise rejection,
   // since we already have fallback handler for unhandled errors (see below),
@@ -68,7 +66,6 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 process.on('uncaughtException', error => {
-
   logger.fatal('uncaughtException', error);
   // pendiente ver si voy a salir del proceso
   // process.exit(1);

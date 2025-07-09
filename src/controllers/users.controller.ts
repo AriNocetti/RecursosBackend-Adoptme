@@ -41,7 +41,7 @@ const uploadDocuments = async (req: any, res: any) => {
     // Crear array de documentos para agregar al usuario
     const documents = req.files.map((file: any) => ({
       name: file.originalname,
-      reference: `/documents/${file.filename}`
+      reference: `/documents/${file.filename}`,
     }));
 
     // Actualizar documentos del usuario usando el método específico

@@ -101,7 +101,7 @@ const logout = async (req: any, res: any) => {
   try {
     const cookie = req.cookies.coderCookie;
     if (!cookie) return res.status(400).send({ status: 'error', error: 'No session' });
-    const userData = jwt.verify(cookie, 'tokenSecretJWT') as { _id: string }; //fix
+    const userData = jwt.verify(cookie, 'tokenSecretJWT') as { _id: string }; // fix
     // Actualiza last_connection
     await usersService.update(userData._id, { last_connection: new Date() });
     return res.clearCookie('coderCookie').send({ status: 'success', message: 'Logged out' });
