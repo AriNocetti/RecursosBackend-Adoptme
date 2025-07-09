@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
 
-import PetDTO from '../dto/Pet.dto;
-import { petsService, usersService } from '../services/index;
-import { createHash } from '../utils/index;
-import { IUser } from '../dao/models/User;
+import PetDTO from '../dto/Pet.dto';
+import { petsService, usersService } from '../services/index';
+import { createHash } from '../utils/index';
+import { IUser } from '../dao/models/User';
 
 const mockingPets = async (req: any, res: any) => {
   try {
