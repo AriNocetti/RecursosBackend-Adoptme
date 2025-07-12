@@ -1,5 +1,7 @@
+import { IPet } from '../dao/models/Pet';
+
 export default class PetDTO {
-  static getPetInputFrom = (pet: any) => ({
+  static getPetInputFrom = (pet: IPet) => ({
     name: pet.name || '',
     specie: pet.specie || '',
     image: pet.image || '',

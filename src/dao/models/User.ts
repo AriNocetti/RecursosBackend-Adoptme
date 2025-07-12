@@ -15,7 +15,7 @@ export interface IUser {
   role?: string;
   pets?: { _id: string }[];
   last_connection?: Date;
-  _id?: string;
+  _id?: mongoose.Types.ObjectId | string;
 }
 
 // Definir el tipo para el modelo de usuario

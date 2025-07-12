@@ -14,12 +14,12 @@ const MONGO_URI = process.env.MONGO_DB_URL;
 // const request = supertest("http://localhost:8080");
 const request = supertest(app);
 
-describe('Testing users Api', function (this: any) {
+describe('Testing users Api', function TestUsersApi() {
   // Aumenta el timeout por si la conexión es lenta
   this.timeout(6000);
 
   // Variables para usar entre tests
-  before(async function () {
+  before(async function before() {
     // Usamos la conexión existente en lugar de crear una nueva
     // La aplicación ya debería estar conectada a MongoDB
     if (mongoose.connection.readyState !== 1) {
@@ -45,7 +45,7 @@ describe('Testing users Api', function (this: any) {
     this.cookie = null;
   });
 
-  after(async function (this: any) {
+  after(async function after() {
     // Limpia la colección de usuarios después de correr los tests
     await mongoose.connection.collection('users').deleteMany({
       email: this.mockUser.email,
@@ -56,14 +56,14 @@ describe('Testing users Api', function (this: any) {
   });
 
   // Test 01 - Registro de un User
-  it('Test Registro Usuario: Debe poder registrar correctamente un usuario', async function (this: any) {
+  it('Test Registro Usuario: Debe poder registrar correctamente un usuario', async function it() {
     const { statusCode } = await request.post('/api/sessions/register').send(this.mockUser);
 
     expect(statusCode).to.eql(200);
   });
 
   // Test 02 - Login de un User
-  it('Test Login Usuario: Debe poder hacer login correctamente con el usuario registrado previamente y obtener la cookie', async function () {
+  it('Test Login Usuario: Debe poder hacer login correctamente con el usuario registrado previamente y obtener la cookie', async function it() {
     const mockLogin = {
       email: this.mockUser.email,
       password: this.mockUser.password,
@@ -80,11 +80,10 @@ describe('Testing users Api', function (this: any) {
       value: cookieData[1].split(';')[0],
     };
     expect(this.cookie.name).to.eql('coderCookie');
-    // eslint-disable-next-line no-unused-expressions
-    expect(this.cookie.value).to.be.ok;
+    expect(!!this.cookie.value).to.equal(true);
   });
 
-  it('Test Current: Debe poder obtener la información del usuario actual usando la cookie', async function (this: any) {
+  it('Test Current: Debe poder obtener la información del usuario actual usando la cookie', async function it() {
     // En lugar de probar la ruta de mascotas con imagen, probamos la ruta current
     // que es más relevante para las sesiones
     const result = await request
@@ -101,7 +100,7 @@ describe('Testing users Api', function (this: any) {
     expect(result.body.payload).to.have.property('role');
   });
 
-  it('Test Logout: Debe poder cerrar sesión correctamente', async function (this: any) {
+  it('Test Logout: Debe poder cerrar sesión correctamente', async function it() {
     const result = await request
       .post('/api/sessions/logout')
       .set('Cookie', [`${this.cookie.name}=${this.cookie.value}`]);

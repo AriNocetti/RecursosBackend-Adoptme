@@ -10,5 +10,5 @@ export default class UserRepository extends GenericRepository<IUser> {
 
   getUserByEmail = (email: string) => this.getBy({ email });
 
-  getUserById = (id: mongoose.Types.ObjectId | string) => this.getBy({ _id: id as any });
+  getUserById = (id: mongoose.Types.ObjectId | string) => this.getBy({ _id: id });
 }

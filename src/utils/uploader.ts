@@ -1,15 +1,24 @@
 //  TS(7016): Could not find a declaration file for module 'mult... Remove this comment to see the full error message
-import multer from 'multer';
+import { Request } from 'express';
+import multer, { StorageEngine } from 'multer';
 
 import __dirname from './index';
 
 // Función para crear storage configurado según tipo de archivo
-const createStorage = (folder: any) =>
+const createStorage = (folder: string): StorageEngine =>
   multer.diskStorage({
-    destination(req: any, file: any, cb: any) {
+    destination(
+      req: Request,
+      file: Express.Multer.File,
+      cb: (error: Error | null, destination: string) => void,
+    ): void {
       cb(null, `${__dirname}/../public/${folder}`);
     },
-    filename(req: any, file: any, cb: any) {
+    filename(
+      req: Request,
+      file: Express.Multer.File,
+      cb: (error: Error | null, filename: string) => void,
+    ): void {
       cb(null, `${Date.now()}-${file.originalname}`);
     },
   });
@@ -27,7 +36,7 @@ const uploader = multer({ storage: petStorage });
 uploader.documents = multer({ storage: documentsStorage });
 
 // Función auxiliar para elegir el storage según el tipo
-uploader.custom = (fileType: any) => {
+uploader.custom = (fileType: string) => {
   switch (fileType) {
     case 'documents':
       return multer({ storage: documentsStorage });

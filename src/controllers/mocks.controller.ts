@@ -1,14 +1,17 @@
 import { faker } from '@faker-js/faker';
+import { Request, Response } from 'express';
 
 import { IUser } from '../dao/models/User';
 import PetDTO from '../dto/Pet.dto';
 import { petsService, usersService } from '../services/index';
-import { createHash } from '../utils/index';
+import { handleMongooseError, createHash } from '../utils';
 
-const mockingPets = async (req: any, res: any) => {
+const mockingPets = async (req: Request, res: Response) => {
   try {
     const num = 100;
     const pets = [];
+
+    const creationPromises: Promise<unknown>[] = []; // fix unknown
 
     for (let i = 0; i < num; i += 1) {
       const pet = PetDTO.getPetInputFrom({
@@ -18,18 +21,20 @@ const mockingPets = async (req: any, res: any) => {
         adopted: false,
         image: faker.image.avatar(),
       });
-      // Crear cada mascota individualmente
-      await petsService.create(pet);
+      creationPromises.push(petsService.create(pet));
       pets.push(pet);
     }
 
+    // Ejecutar todas las operaciones de creación en paralelo
+    await Promise.all(creationPromises);
+
     res.status(200).send({ status: 'success', payload: pets });
-  } catch (error) {
-    res.status(500).send({ status: 'error', error: 'Failed to generate pets' });
+  } catch (err: unknown) {
+    handleMongooseError(res, err);
   }
 };
 
-const mockingUsers = async (req: any, res: any) => {
+const mockingUsers = async (req: Request, res: Response) => {
   try {
     const num = 50;
     const users = [];
@@ -57,12 +62,12 @@ const mockingUsers = async (req: any, res: any) => {
     // const result = await usersService.create(users);
     console.log('Ejecutando versión actualizada del mockingUsers');
     res.status(200).send({ status: 'success', message: 'Versión actualizada', payload: users });
-  } catch (error) {
-    res.status(500).send({ status: 'error', error: 'Failed to generate users' });
+  } catch (error: unknown) {
+    handleMongooseError(res, error);
   }
 };
 
-const generateData = async (req: any, res: any) => {
+const generateData = async (req: Request, res: Response) => {
   try {
     const { users = 0, pets = 0 } = req.body;
 
@@ -101,13 +106,11 @@ const generateData = async (req: any, res: any) => {
     }
 
     // Crear cada usuario y mascota individualmente
-    for (const user of generatedUsers) {
-      await usersService.create(user);
-    }
+    // Crear usuarios en paralelo
+    await Promise.all(generatedUsers.map(user => usersService.create(user)));
 
-    for (const pet of generatedPets) {
-      await petsService.create(pet);
-    }
+    // Crear mascotas en paralelo
+    await Promise.all(generatedPets.map(pet => petsService.create(pet)));
 
     res.status(200).send({
       status: 'success',
@@ -116,8 +119,8 @@ const generateData = async (req: any, res: any) => {
         pets: generatedPets,
       },
     });
-  } catch (error) {
-    res.status(500).send({ status: 'error', error: 'Failed to generate data' });
+  } catch (error: unknown) {
+    handleMongooseError(res, error);
   }
 };
 

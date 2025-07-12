@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 import { logger } from '../config/logger';
 import errorsDictionary from '../dictionary/errors.dictionary';
 import { IDictionaryError } from '../dictionary/IDictionaryError';
@@ -30,7 +32,7 @@ export class CustomError extends Error {
     );
   }
 
-  sendResponse(res: any) {
+  sendResponse(res: Response) {
     return res.status(this.dictionaryError.httpStatus).json({
       status: 'error',
       error: {
@@ -42,14 +44,14 @@ export class CustomError extends Error {
   }
 }
 
-export const errorHandler = (err: any, req: any, res: any) => {
+export const errorHandler = (err: Error, req: Request, res: Response) => {
   if (err instanceof CustomError) {
     err.logError();
-    return err.sendResponse(res);
+    err.sendResponse(res);
   }
 
   // Error no manejado
-  return res.status(500).json({
+  res.status(500).json({
     status: 'error',
     error: {
       code: 9001,

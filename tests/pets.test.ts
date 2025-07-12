@@ -24,13 +24,11 @@ const request = supertest(app);
 
 describe('Pruebas de integración en ADOPTME /api/pets', () => {
   describe('Pruebas básicas (sin subir imágenes)', () => {
-    before(async function () {
-      // console.log(".......IN BEFORE........");
+    before(async function before() {
       await mongoose.connection.collection('pets').deleteMany({ name: 'Richard' });
     });
 
-    after(async function () {
-      // console.log(".......IN BEFORE........");
+    after(async function after() {
       await mongoose.connection.collection('pets').deleteMany({ name: 'Richard' });
     });
 
@@ -49,7 +47,7 @@ describe('Pruebas de integración en ADOPTME /api/pets', () => {
       try {
         const { statusCode } = await request.post('/api/pets').send(validPet);
         expect(statusCode).to.equal(200);
-      } catch (error) {
+      } catch {
         throw new Error('Falló el subtest: status 200 con datos correctos');
       }
       // SubTest 02 - Verificar que se da de alta correctamente en la DB
@@ -58,7 +56,7 @@ describe('Pruebas de integración en ADOPTME /api/pets', () => {
         expect(body).to.have.property('status', 'success');
         expect(body).to.have.property('payload');
         expect(body.payload).to.have.property('name', validPet.name);
-      } catch (error) {
+      } catch {
         throw new Error('Falló el subtest: creación exitosa con respuesta correcta');
       }
     });

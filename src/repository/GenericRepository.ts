@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
 
+import { IUserDocument } from '../dao/models/User';
+
 // Interfaz genérica para los DAOs
 interface IGenericDAO<T> {
-  get(params: Partial<T>): any; // Mongoose Query o Promise
-  getBy(params: Partial<T>): any; // Mongoose Query o Promise
-  save(doc: T): any; // Mongoose Query o Promise
-  update(id: mongoose.Types.ObjectId | string, doc: Partial<T>): any; // Mongoose Query o Promise
-  delete(id: mongoose.Types.ObjectId | string): any; // Mongoose Query o Promise
-  addDocuments?(userId: mongoose.Types.ObjectId | string, documents: any[]): any; // Método opcional para añadir documentos
+  get(params: Partial<T>): Promise<T[]>;
+  getBy(params: Partial<T>): Promise<T | null>;
+  save(doc: T): Promise<T>;
+  update(id: mongoose.Types.ObjectId | string, doc: Partial<T>): Promise<T | null>;
+  delete(id: mongoose.Types.ObjectId | string): Promise<boolean>;
+  addDocuments?(userId: mongoose.Types.ObjectId | string, documents: IUserDocument[]): Promise<T>;
 }
 
 // Clase de repositorio genérico tipada
@@ -18,18 +20,21 @@ export default class GenericRepository<T> {
     this.dao = dao;
   }
 
-  getAll = (params: Partial<T> = {}) => this.dao.get(params);
+  getAll = (params: Partial<T> = {}): Promise<T[]> => this.dao.get(params);
 
-  getBy = (params: Partial<T>) => this.dao.getBy(params);
+  getBy = (params: Partial<T>): Promise<T | null> => this.dao.getBy(params);
 
-  create = (doc: T) => this.dao.save(doc);
+  create = (doc: T): Promise<T> => this.dao.save(doc);
 
-  update = (id: mongoose.Types.ObjectId | string, doc: Partial<T>) => this.dao.update(id, doc);
+  update = (id: mongoose.Types.ObjectId | string, doc: Partial<T>): Promise<T | null> =>
+    this.dao.update(id, doc);
 
-  delete = (id: mongoose.Types.ObjectId | string) => this.dao.delete(id);
+  delete = (id: mongoose.Types.ObjectId | string): Promise<boolean> => this.dao.delete(id);
 
-  // Método genérico para añadir documentos (solo disponible si el DAO lo implementa)
-  addDocuments = (userId: mongoose.Types.ObjectId | string, documents: any[]) => {
+  addDocuments = (
+    userId: mongoose.Types.ObjectId | string,
+    documents: IUserDocument[],
+  ): Promise<T> => {
     if (this.dao.addDocuments) {
       return this.dao.addDocuments(userId, documents);
     }

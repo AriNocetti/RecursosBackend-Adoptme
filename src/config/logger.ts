@@ -1,7 +1,7 @@
+import { NextFunction, Request, Response } from 'express';
 import winston from 'winston';
 
 import errorsDictionary from '../dictionary/errors.dictionary';
-import throwLoggerError from '../utils/loggerError';
 
 import config from './config';
 
@@ -67,13 +67,13 @@ if (config.MODE === 'DEV') {
   logger.add(transportConsoleProd);
   logger.info(`Logger initialized in PROD mode on port: ${config.PORT}`);
 } else {
-  throwLoggerError(errorsDictionary.INVALID_CONFIG, [
+  console.error(errorsDictionary.INVALID_CONFIG, [
     `La variable de entorno MODE: ${config.MODE} es invalida para configurar el logger`,
   ]);
 }
 
 //* Middleware para inyectar el logger en cada request
-export const middLogg = (req: any, res: any, next: any) => {
+export const middLogg = (req: Request, res: Response, next: NextFunction) => {
   req.logger = logger;
   next();
 };

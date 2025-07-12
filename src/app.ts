@@ -1,5 +1,5 @@
 import cookieParser from 'cookie-parser';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 
@@ -39,7 +39,7 @@ app.use('/api/adoptions', adoptionsRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/mocks', mocksRouter);
 
-app.get('/loggerTest', (req: any, res: any) => {
+app.get('/loggerTest', (req: Request, res: Response) => {
   req.logger.debug('Debug log test');
   req.logger.http('HTTP log test');
   req.logger.info('Info log test');
