@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import winston from 'winston';
 
-import errorsDictionary from '../dictionary/errors.dictionary';
+import errorsDictionary from '../utils/dictionary/errors.dictionary';
 
 import config from './config';
 

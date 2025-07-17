@@ -1,16 +1,7 @@
 import mongoose from 'mongoose';
 
+import { IGenericDAO } from '../dao/IGenericDao';
 import { IUserDocument } from '../dao/models/User';
-
-// Interfaz genérica para los DAOs
-interface IGenericDAO<T> {
-  get(params: Partial<T>): Promise<T[]>;
-  getBy(params: Partial<T>): Promise<T | null>;
-  save(doc: T): Promise<T>;
-  update(id: mongoose.Types.ObjectId | string, doc: Partial<T>): Promise<T | null>;
-  delete(id: mongoose.Types.ObjectId | string): Promise<boolean>;
-  addDocuments?(userId: mongoose.Types.ObjectId | string, documents: IUserDocument[]): Promise<T>;
-}
 
 // Clase de repositorio genérico tipada
 export default class GenericRepository<T> {

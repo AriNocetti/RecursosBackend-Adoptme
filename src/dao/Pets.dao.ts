@@ -1,31 +1,28 @@
-import mongoose from 'mongoose';
-
+import { IGenericDAO } from './IGenericDao';
 import petModel, { IPet, PetModelType } from './models/Pet';
 
-export default class Pet {
-  private model: PetModelType;
+export default class Pet implements IGenericDAO<IPet> {
+  private model: PetModelType = petModel as PetModelType;
 
-  constructor() {
-    this.model = petModel as PetModelType;
+  async get(params: Partial<IPet>): Promise<IPet[]> {
+    return this.model.find(params).lean().exec();
   }
 
-  get(params: Partial<IPet>) {
-    return this.model.find(params);
+  async getBy(params: Partial<IPet>): Promise<IPet | null> {
+    return this.model.findOne(params).lean().exec();
   }
 
-  getBy(params: Partial<IPet>) {
-    return this.model.findOne(params);
+  async save(doc: IPet): Promise<IPet> {
+    const created = await this.model.create(doc);
+    return created.toObject();
   }
 
-  save(doc: IPet) {
-    return this.model.create(doc);
+  async update(id: string, doc: Partial<IPet>): Promise<IPet | null> {
+    return this.model.findByIdAndUpdate(id, { $set: doc }, { new: true }).lean().exec();
   }
 
-  update(id: mongoose.Types.ObjectId | string, doc: Partial<IPet>) {
-    return this.model.findByIdAndUpdate(id, { $set: doc });
-  }
-
-  delete(id: mongoose.Types.ObjectId | string) {
-    return this.model.findByIdAndDelete(id);
+  async delete(id: string): Promise<boolean> {
+    const res = await this.model.findByIdAndDelete(id).exec();
+    return res !== null;
   }
 }

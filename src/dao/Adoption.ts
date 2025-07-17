@@ -1,31 +1,28 @@
-import mongoose from 'mongoose';
-
+import { IGenericDAO } from './IGenericDao';
 import adoptionModel, { IAdoption, AdoptionModelType } from './models/Adoption';
 
-export default class Adoption {
-  private model: AdoptionModelType;
+export default class Adoption implements IGenericDAO<IAdoption> {
+  private model: AdoptionModelType = adoptionModel as AdoptionModelType;
 
-  constructor() {
-    this.model = adoptionModel as AdoptionModelType;
+  async get(params: Partial<IAdoption>): Promise<IAdoption[]> {
+    return this.model.find(params).lean().exec(); // ⇒ Promise<IAdoption[]>
   }
 
-  get(params: Partial<IAdoption>) {
-    return this.model.find(params);
+  async getBy(params: Partial<IAdoption>): Promise<IAdoption | null> {
+    return this.model.findOne(params).lean().exec(); // ⇒ Promise<IAdoption | null>
   }
 
-  getBy(params: Partial<IAdoption>) {
-    return this.model.findOne(params);
+  async save(doc: IAdoption): Promise<IAdoption> {
+    const created = await this.model.create(doc); // ⇒ IAdoption & Document
+    return created.toObject(); // ⇒ IAdoption plano
   }
 
-  save(doc: IAdoption) {
-    return this.model.create(doc);
+  async update(id: string, doc: Partial<IAdoption>): Promise<IAdoption | null> {
+    return this.model.findByIdAndUpdate(id, { $set: doc }, { new: true }).lean().exec(); // ⇒ Promise<IAdoption | null>
   }
 
-  update(id: mongoose.Types.ObjectId | string, doc: Partial<IAdoption>) {
-    return this.model.findByIdAndUpdate(id, { $set: doc });
-  }
-
-  delete(id: mongoose.Types.ObjectId | string) {
-    return this.model.findByIdAndDelete(id);
+  async delete(id: string): Promise<boolean> {
+    const res = await this.model.findByIdAndDelete(id).exec();
+    return res !== null; // ⇒ true si algo se borró
   }
 }

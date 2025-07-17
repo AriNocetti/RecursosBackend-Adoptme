@@ -1,46 +1,42 @@
-import mongoose from 'mongoose';
-
+import { IGenericDAO } from './IGenericDao';
 import userModel, { IUser, UserModelType } from './models/User';
 
-export default class Users {
-  private model: UserModelType;
+export default class Users implements IGenericDAO<IUser> {
+  private model: UserModelType = userModel as UserModelType;
 
-  constructor() {
-    this.model = userModel as UserModelType;
+  async get(params: Partial<IUser>): Promise<IUser[]> {
+    return this.model.find(params).lean().exec();
   }
 
-  get(params: Partial<IUser>) {
-    return this.model.find(params);
+  async getBy(params: Partial<IUser>): Promise<IUser | null> {
+    return this.model.findOne(params).lean().exec();
   }
 
-  getBy(params: Partial<IUser>) {
-    return this.model.findOne(params);
+  async save(doc: IUser): Promise<IUser> {
+    const created = await this.model.create(doc);
+    return created.toObject();
   }
 
-  save(doc: IUser) {
-    return this.model.create(doc);
-  }
-
-  update(id: mongoose.Types.ObjectId | string, doc: Partial<IUser>) {
-    return this.model.findByIdAndUpdate(id, { $set: doc });
+  async update(id: string, doc: Partial<IUser>): Promise<IUser | null> {
+    return this.model.findByIdAndUpdate(id, { $set: doc }, { new: true }).lean().exec();
   }
 
   /**
-   * Método específico para añadir documentos a un usuario
-   * @param userId - ID del usuario
-   * @param documents - Array de documentos a añadir
+   * Añade documentos al usuario y devuelve el usuario actualizado.
    */
-  addDocuments(
-    userId: mongoose.Types.ObjectId | string,
+  async addDocuments(
+    userId: string,
     documents: Array<{ name: string; reference: string }>,
-  ) {
-    // Usamos $push con $each internamente para agregar múltiples documentos
-    return this.model.findByIdAndUpdate(userId, {
-      $push: { documents: { $each: documents } },
-    });
+  ): Promise<IUser> {
+    const updated = await this.model
+      .findByIdAndUpdate(userId, { $push: { documents: { $each: documents } } }, { new: true })
+      .lean()
+      .exec();
+    return updated as IUser; // asumimos que el usuario existe
   }
 
-  delete(id: mongoose.Types.ObjectId | string) {
-    return this.model.findByIdAndDelete(id);
+  async delete(id: string): Promise<boolean> {
+    const res = await this.model.findByIdAndDelete(id).exec();
+    return res !== null;
   }
 }

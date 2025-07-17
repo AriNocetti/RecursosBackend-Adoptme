@@ -26,6 +26,11 @@ mongoose.connection.on('error', err => {
   }
 });
 
+// strictQuery es una opción de seguridad en Mongoose que controla cómo se manejan las consultas a la base de datos. Específicamente:
+// Activado (true): Solo permite consultar campos que están definidos en el esquema del modelo.
+// Desactivado (false): Permite consultar cualquier campo, incluso si no está definido en el esquema.
+mongoose.set('strictQuery', false);
+
 mongoose.connect(config.MONGO_DB_URL);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));

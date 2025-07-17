@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 
 import { logger } from '../config/logger';
-import errorsDictionary from '../dictionary/errors.dictionary';
-import { IDictionaryError } from '../dictionary/IDictionaryError';
+
+import errorsDictionary from './dictionary/errors.dictionary';
+import { IDictionaryError } from './dictionary/IDictionaryError';
 
 export class CustomError extends Error {
   // errorKey nose si deberia traer este dato en el obj dictionary error
